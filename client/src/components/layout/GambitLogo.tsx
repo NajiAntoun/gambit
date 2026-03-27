@@ -67,22 +67,22 @@ export function GambitLogo({ linkTo = '/' }: { linkTo?: string }) {
           userSelect: 'none',
         }}
       >
-        {/* King topples */}
-        <span
-          className="gambit-logo-king"
-          style={{ fontSize: '2.6rem', lineHeight: 1, color: 'rgba(201,168,76,0.75)' }}
-          aria-hidden
-        >
-          ♚
-        </span>
-
-        {/* Our pawn crushes it */}
-        <span
-          className="gambit-logo-pawn"
-          style={{ fontSize: '2.9rem', lineHeight: 1, color: 'var(--color-gold)', marginLeft: '-1.1rem' }}
-          aria-hidden
-        >
-          ♟
+        {/* Piece stack — king and pawn share the exact same position */}
+        <span style={{ position: 'relative', display: 'inline-block', width: '2.8rem', height: '2.8rem', flexShrink: 0 }}>
+          <span
+            className="gambit-logo-king"
+            style={{ position: 'absolute', top: 0, left: 0, fontSize: '2.8rem', lineHeight: 1, color: 'rgba(201,168,76,0.75)' }}
+            aria-hidden
+          >
+            ♚
+          </span>
+          <span
+            className="gambit-logo-pawn"
+            style={{ position: 'absolute', top: 0, left: 0, fontSize: '2.8rem', lineHeight: 1, color: 'var(--color-gold)' }}
+            aria-hidden
+          >
+            ♟
+          </span>
         </span>
 
         {/* Wordmark — Cinzel, crowned G */}
