@@ -24,7 +24,7 @@ export function Home() {
   }
 
   return (
-    <div style={{ maxWidth: '640px', margin: '0 auto', width: '100%', padding: '24px 16px 80px' }}>
+    <div style={{ maxWidth: '960px', margin: '0 auto', width: '100%', padding: '24px 16px 80px' }}>
       {/* Hero */}
       <div style={{ textAlign: 'center', marginBottom: '28px' }}>
         <h1
@@ -107,7 +107,7 @@ export function Home() {
           >
             {category}
           </h2>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: '8px' }}>
             {items.map((o) => (
               <OpeningCard key={o.id} opening={o} />
             ))}
