@@ -1,11 +1,11 @@
 import { Link } from 'react-router-dom';
 
 /**
- * Gambit wordmark with a one-time entrance animation.
+ * Gambit wordmark — Cinzel font, crowned G, chess piece animation.
  *
- * Phase 1 (0 → 1.0s)  : King slowly tilts, then dramatically falls and fades
- * Phase 2 (0.8 → 1.4s): Our pawn drops in with a confident spring
- * Phase 3 (1.3 → 1.7s): "Gambit" wordmark slides in
+ * Phase 1 (0.1s → 1.1s) : King visibly tilts, then crashes and fades out
+ * Phase 2 (0.85s → 1.5s): Our pawn drops in with a confident spring bounce
+ * Phase 3 (1.3s → 1.7s) : "Gambit" wordmark slides in — crowned G leads
  *
  * Total: ~1.7s. Plays once per mount.
  */
@@ -14,22 +14,26 @@ export function GambitLogo({ linkTo = '/' }: { linkTo?: string }) {
     <>
       <style>{`
         @keyframes gambit-king-fall {
-          0%   { transform: rotate(0deg);                          opacity: 1;   }
-          20%  { transform: rotate(-8deg);                         opacity: 1;   }
-          45%  { transform: rotate(-30deg);                        opacity: 0.9; }
-          70%  { transform: rotate(-72deg) translateX(-4px);       opacity: 0.5; }
-          100% { transform: rotate(-90deg) translateX(-6px) scaleY(0.65); opacity: 0; }
+          0%   { transform: rotate(0deg);                                opacity: 1;   }
+          20%  { transform: rotate(-10deg);                              opacity: 1;   }
+          45%  { transform: rotate(-35deg);                              opacity: 0.9; }
+          70%  { transform: rotate(-75deg) translateX(-5px);             opacity: 0.6; }
+          100% { transform: rotate(-90deg) translateX(-8px) scaleY(0.6); opacity: 0;   }
         }
         @keyframes gambit-pawn-drop {
-          0%   { transform: translateY(-18px) scale(0.8);  opacity: 0; }
-          50%  { transform: translateY(3px)   scale(1.08); opacity: 1; }
-          72%  { transform: translateY(-2px)  scale(0.97); opacity: 1; }
-          88%  { transform: translateY(1px)   scale(1.01); opacity: 1; }
+          0%   { transform: translateY(-22px) scale(0.78); opacity: 0; }
+          48%  { transform: translateY(4px)   scale(1.10); opacity: 1; }
+          70%  { transform: translateY(-2px)  scale(0.97); opacity: 1; }
+          86%  { transform: translateY(1px)   scale(1.02); opacity: 1; }
           100% { transform: translateY(0)     scale(1);    opacity: 1; }
         }
         @keyframes gambit-text-in {
-          0%   { transform: translateX(-6px); opacity: 0; }
+          0%   { transform: translateX(-8px); opacity: 0; }
           100% { transform: translateX(0);    opacity: 1; }
+        }
+        @keyframes gambit-crown-in {
+          0%   { transform: translateY(-4px) scale(0.7); opacity: 0; }
+          100% { transform: translateY(0)    scale(1);   opacity: 1; }
         }
 
         .gambit-logo-king {
@@ -44,7 +48,12 @@ export function GambitLogo({ linkTo = '/' }: { linkTo?: string }) {
         }
         .gambit-logo-text {
           display: inline-block;
+          font-family: 'Cinzel', 'Georgia', serif;
           animation: gambit-text-in 0.4s ease-out 1.3s both;
+        }
+        .gambit-logo-crown {
+          display: inline-block;
+          animation: gambit-crown-in 0.35s ease-out 1.5s both;
         }
       `}</style>
 
@@ -53,41 +62,62 @@ export function GambitLogo({ linkTo = '/' }: { linkTo?: string }) {
         style={{
           display: 'flex',
           alignItems: 'center',
-          gap: '0.25rem',
+          gap: '0.3rem',
           textDecoration: 'none',
           userSelect: 'none',
         }}
       >
-        {/* King topples — */}
+        {/* King topples — visible gold, not grayed out */}
         <span
           className="gambit-logo-king"
-          style={{ fontSize: '1.5rem', lineHeight: 1, color: 'rgba(201,168,76,0.4)' }}
+          style={{ fontSize: '1.9rem', lineHeight: 1, color: 'rgba(201,168,76,0.75)' }}
           aria-hidden
         >
           ♚
         </span>
 
-        {/* — our pawn crushes it */}
+        {/* Our pawn crushes it */}
         <span
           className="gambit-logo-pawn"
-          style={{ fontSize: '1.75rem', lineHeight: 1, color: 'var(--color-gold)', marginLeft: '-0.7rem' }}
+          style={{ fontSize: '2.1rem', lineHeight: 1, color: 'var(--color-gold)', marginLeft: '-0.85rem' }}
           aria-hidden
         >
           ♟
         </span>
 
-        {/* Wordmark arrives once the dust settles */}
+        {/* Wordmark — Cinzel, crowned G */}
         <span
           className="gambit-logo-text"
           style={{
-            fontSize: '1.25rem',
-            fontWeight: 800,
-            letterSpacing: '-0.01em',
+            fontSize: '1.35rem',
+            fontWeight: 700,
+            letterSpacing: '0.04em',
             color: 'var(--color-gold)',
-            marginLeft: '0.2rem',
+            marginLeft: '0.25rem',
+            display: 'flex',
+            alignItems: 'flex-start',
           }}
         >
-          Gambit
+          {/* G with a small crown perched above it */}
+          <span style={{ position: 'relative', display: 'inline-block' }}>
+            G
+            <span
+              className="gambit-logo-crown"
+              style={{
+                position: 'absolute',
+                top: '-0.55em',
+                left: '50%',
+                transform: 'translateX(-50%)',
+                fontSize: '0.5em',
+                lineHeight: 1,
+                color: 'var(--color-gold)',
+              }}
+              aria-hidden
+            >
+              ♛
+            </span>
+          </span>
+          ambit
         </span>
       </Link>
     </>
