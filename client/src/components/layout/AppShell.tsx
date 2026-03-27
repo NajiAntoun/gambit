@@ -1,6 +1,7 @@
 import { Outlet, Link, useLocation, Navigate } from 'react-router-dom';
 import { useAuth, UserButton } from '@clerk/clerk-react';
 import { useProgress } from '../../hooks/useProgress';
+import { useAccount } from '../../hooks/useAccount';
 
 function LoadingScreen() {
   return (
@@ -25,10 +26,19 @@ export function AppShell() {
   const location = useLocation();
   const { isLoaded, isSignedIn } = useAuth();
   const { isLoading: isProgressLoading } = useProgress();
+  const { isLoading: isAccountLoading, isNewUser } = useAccount();
   const isBoard = /^\/(learn|quiz|drill)\//.test(location.pathname);
 
-  if (!isLoaded || isProgressLoading) return <LoadingScreen />;
+  // Wait for Clerk + both data fetches before rendering anything
+  if (!isLoaded || isProgressLoading || isAccountLoading) return <LoadingScreen />;
+
+  // Auth guard
   if (!isSignedIn) return <Navigate to="/sign-in" replace />;
+
+  // Onboarding — redirect new users to profile setup (skippable from there)
+  if (isNewUser && location.pathname !== '/profile') {
+    return <Navigate to="/profile?welcome=true" replace />;
+  }
 
   return (
     <div className="flex flex-col min-h-svh" style={{ background: 'var(--color-bg-dark)' }}>
@@ -49,6 +59,13 @@ export function AppShell() {
               style={{ color: 'var(--color-text-muted)' }}
             >
               Progress
+            </Link>
+            <Link
+              to="/profile"
+              className="text-sm font-medium transition-colors"
+              style={{ color: 'var(--color-text-muted)' }}
+            >
+              Profile
             </Link>
             <UserButton
               appearance={{

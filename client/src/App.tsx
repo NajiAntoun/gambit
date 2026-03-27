@@ -3,11 +3,13 @@ import { ClerkProvider, useAuth } from '@clerk/clerk-react';
 import './App.css';
 import { AppShell } from './components/layout/AppShell';
 import { ProgressContext, useProgressState } from './hooks/useProgress';
+import { AccountContext, useAccountState } from './hooks/useAccount';
 import { Home } from './routes/Home';
 import { ModeSelect } from './routes/ModeSelect';
 import { Learn } from './routes/Learn';
 import { Quiz } from './routes/Quiz';
 import { Dashboard } from './routes/Dashboard';
+import { Profile } from './routes/Profile';
 import { SignInPage } from './routes/SignIn';
 import { SignUpPage } from './routes/SignUp';
 
@@ -20,22 +22,30 @@ const router = createBrowserRouter([
     path: '/',
     element: <AppShell />,
     children: [
-      { index: true, element: <Home /> },
-      { path: 'mode/:openingId', element: <ModeSelect /> },
-      { path: 'learn/:openingId', element: <Learn /> },
-      { path: 'quiz/:openingId', element: <Quiz /> },
-      { path: 'dashboard', element: <Dashboard /> },
+      { index: true,                  element: <Home />        },
+      { path: 'mode/:openingId',      element: <ModeSelect />  },
+      { path: 'learn/:openingId',     element: <Learn />       },
+      { path: 'quiz/:openingId',      element: <Quiz />        },
+      { path: 'dashboard',            element: <Dashboard />   },
+      { path: 'profile',              element: <Profile />     },
     ],
   },
 ]);
 
-/** Lives inside ClerkProvider so it can call useAuth(). */
+/**
+ * Lives inside ClerkProvider so it can call useAuth().
+ * Both contexts start fetching from the server in parallel on mount.
+ */
 function AppWithAuth() {
   const { userId } = useAuth();
   const progressValue = useProgressState(userId ?? '');
+  const accountValue  = useAccountState();
+
   return (
     <ProgressContext.Provider value={progressValue}>
-      <RouterProvider router={router} />
+      <AccountContext.Provider value={accountValue}>
+        <RouterProvider router={router} />
+      </AccountContext.Provider>
     </ProgressContext.Provider>
   );
 }

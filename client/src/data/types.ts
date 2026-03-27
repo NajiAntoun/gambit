@@ -1,4 +1,16 @@
 export type Color = 'white' | 'black';
+export type ChessLevel = 'beginner' | 'intermediate' | 'advanced';
+export type PreferredColor = 'white' | 'black' | 'both';
+export type Goal = 'casual' | 'tournament' | 'rating';
+
+export interface Account {
+  displayName:    string | null;
+  chessLevel:     ChessLevel | null;
+  preferredColor: PreferredColor | null;
+  goal:           Goal | null;
+  birthYear:      number | null;
+  country:        string | null;
+}
 export type Difficulty = 'beginner' | 'intermediate' | 'advanced';
 export type ProgressStatus = 'not-started' | 'learning' | 'mastered';
 

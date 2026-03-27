@@ -1,5 +1,5 @@
 import { API_URL } from './constants';
-import type { OpeningProgress } from '../data/types';
+import type { OpeningProgress, Account } from '../data/types';
 
 // ─── AI ──────────────────────────────────────────────────────────────────────
 
@@ -59,4 +59,51 @@ export async function saveProgress(
     body: JSON.stringify({ openings }),
   });
   if (!res.ok) throw new Error(`API error: ${res.status}`);
+}
+
+// ─── Account ──────────────────────────────────────────────────────────────────
+
+export async function fetchAccount(token: string): Promise<Account | null> {
+  const res = await fetch(`${API_URL}/api/account`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  if (!res.ok) throw new Error(`API error: ${res.status}`);
+  const data = await res.json() as { account: Account | null };
+  return data.account;
+}
+
+/** Upsert — fields absent from the payload are left unchanged (COALESCE in DB). */
+export async function upsertAccount(
+  fields: Partial<Account>,
+  token: string,
+): Promise<Account> {
+  const res = await fetch(`${API_URL}/api/account`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(fields),
+  });
+  if (!res.ok) throw new Error(`API error: ${res.status}`);
+  const data = await res.json() as { account: Account };
+  return data.account;
+}
+
+/** Patch — explicitly sets fields, including clearing them to null. */
+export async function patchAccount(
+  fields: Partial<Account>,
+  token: string,
+): Promise<Account> {
+  const res = await fetch(`${API_URL}/api/account`, {
+    method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(fields),
+  });
+  if (!res.ok) throw new Error(`API error: ${res.status}`);
+  const data = await res.json() as { account: Account };
+  return data.account;
 }

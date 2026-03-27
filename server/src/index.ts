@@ -3,6 +3,7 @@ import cors from 'cors';
 import { clerkMiddleware } from '@clerk/express';
 import { aiRouter } from './routes/ai';
 import { progressRouter } from './routes/progress';
+import { accountRouter } from './routes/account';
 import { initDb } from './lib/db';
 
 const app = express();
@@ -14,7 +15,7 @@ const allowedOrigins = process.env.ALLOWED_ORIGIN
 
 app.use(cors({
   origin: allowedOrigins,
-  methods: ['GET', 'POST'],
+  methods: ['GET', 'POST', 'PATCH'],
   allowedHeaders: ['Content-Type', 'Authorization'],
 }));
 
@@ -27,6 +28,7 @@ app.get('/api/health', (_req, res) => {
 
 app.use('/api', aiRouter);
 app.use('/api/progress', progressRouter);
+app.use('/api/account', accountRouter);
 
 initDb()
   .then(() => {
