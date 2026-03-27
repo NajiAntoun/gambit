@@ -10,8 +10,9 @@ interface OnlineEntry {
   country:     string | null;
   gender:      string | null;
   chessLevel:  string | null;
-  rating:      number | null; // headline rating sent by client
-  lastSeen:    number; // epoch ms
+  rating:      number | null;
+  imageUrl:    string | null;
+  lastSeen:    number;
 }
 
 const store = new Map<string, OnlineEntry>();
@@ -31,7 +32,7 @@ presenceRouter.post('/', requireAuth(), (req: Request, res: Response) => {
   const { userId } = getAuth(req);
   if (!userId) { res.status(401).json({ error: 'Unauthorized' }); return; }
 
-  const { displayName, country, gender, chessLevel, rating } = req.body as Partial<OnlineEntry>;
+  const { displayName, country, gender, chessLevel, rating, imageUrl } = req.body as Partial<OnlineEntry>;
 
   store.set(userId, {
     displayName: displayName ?? null,
@@ -39,6 +40,7 @@ presenceRouter.post('/', requireAuth(), (req: Request, res: Response) => {
     gender:      gender      ?? null,
     chessLevel:  chessLevel  ?? null,
     rating:      typeof rating === 'number' ? rating : null,
+    imageUrl:    typeof imageUrl === 'string' ? imageUrl : null,
     lastSeen:    Date.now(),
   });
 
@@ -67,6 +69,7 @@ presenceRouter.get('/', requireAuth(), (_req: Request, res: Response) => {
         gender:      entry.gender,
         chessLevel:  entry.chessLevel,
         rating:      entry.rating,
+        imageUrl:    entry.imageUrl,
       });
     }
   }

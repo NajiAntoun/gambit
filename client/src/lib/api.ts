@@ -162,7 +162,7 @@ export async function fetchLichess(username: string): Promise<LichessRatings> {
 // ─── Presence ─────────────────────────────────────────────────────────────────
 
 export async function sendHeartbeat(
-  user: Pick<OnlineUser, 'displayName' | 'country' | 'gender' | 'chessLevel' | 'rating'>,
+  user: Pick<OnlineUser, 'displayName' | 'country' | 'gender' | 'chessLevel' | 'rating' | 'imageUrl'>,
   token: string,
 ): Promise<void> {
   await fetch(`${API_URL}/api/presence`, {

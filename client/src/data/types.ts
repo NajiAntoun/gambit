@@ -33,6 +33,8 @@ export interface OnlineUser {
   chessLevel:  string | null;
   /** Best available rating: FIDE → platform rapid → platform blitz → null */
   rating:      number | null;
+  /** Clerk profile picture URL (from Google / social login) */
+  imageUrl:    string | null;
 }
 export type Difficulty = 'beginner' | 'intermediate' | 'advanced';
 export type ProgressStatus = 'not-started' | 'learning' | 'mastered';

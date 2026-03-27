@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
-import { useAuth } from '@clerk/clerk-react';
+import { useAuth, useUser } from '@clerk/clerk-react';
 import { useAccount } from './useAccount';
 import { sendHeartbeat, fetchOnlineUsers, sendSignOff } from '../lib/api';
 import type { OnlineUser } from '../data/types';
@@ -15,6 +15,7 @@ interface PresenceState {
 
 export function usePresence() {
   const { getToken } = useAuth();
+  const { user }     = useUser();
   const { account }  = useAccount();
   const [state, setState] = useState<PresenceState>({ count: 0, users: [], loading: true });
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
@@ -43,6 +44,7 @@ export function usePresence() {
         gender:      account?.gender      ?? null,
         chessLevel:  account?.chessLevel  ?? null,
         rating:      headlineRating,
+        imageUrl:    user?.imageUrl       ?? null,
       }, token);
     } catch {
       // Presence is non-critical — swallow errors silently

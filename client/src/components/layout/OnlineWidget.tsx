@@ -53,19 +53,32 @@ function UserRow({ user }: { user: OnlineUser }) {
       onMouseEnter={(e) => (e.currentTarget.style.background = 'rgba(201,168,76,0.07)')}
       onMouseLeave={(e) => (e.currentTarget.style.background = 'transparent')}
     >
-      {/* Avatar */}
-      <div
-        style={{
-          width: '30px', height: '30px',
-          borderRadius: '50%',
-          background: color,
-          display: 'flex', alignItems: 'center', justifyContent: 'center',
-          fontWeight: 700, fontSize: '13px', color: '#fff',
-          flexShrink: 0,
-        }}
-      >
-        {initial}
-      </div>
+      {/* Avatar — profile photo if available, else colored initial */}
+      {user.imageUrl ? (
+        <img
+          src={user.imageUrl}
+          alt={name}
+          style={{
+            width: '30px', height: '30px',
+            borderRadius: '50%',
+            objectFit: 'cover',
+            flexShrink: 0,
+          }}
+        />
+      ) : (
+        <div
+          style={{
+            width: '30px', height: '30px',
+            borderRadius: '50%',
+            background: color,
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            fontWeight: 700, fontSize: '13px', color: '#fff',
+            flexShrink: 0,
+          }}
+        >
+          {initial}
+        </div>
+      )}
 
       {/* Name */}
       <span style={{ flex: 1, fontSize: '14px', color: 'var(--color-text)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
