@@ -1,8 +1,9 @@
-import { Outlet, Link, useLocation, Navigate, useNavigate } from 'react-router-dom';
+import { Outlet, useLocation, Navigate, useNavigate } from 'react-router-dom';
 import { useAuth, UserButton } from '@clerk/clerk-react';
 import { useProgress } from '../../hooks/useProgress';
 import { useAccount } from '../../hooks/useAccount';
 import { OnlineWidget } from './OnlineWidget';
+import { GambitLogo } from './GambitLogo';
 
 function LoadingScreen() {
   return (
@@ -44,11 +45,7 @@ export function AppShell() {
           className="flex items-center justify-between px-4 py-3 border-b"
           style={{ borderColor: 'var(--color-border)', background: 'var(--color-bg-card)' }}
         >
-          <Link to="/" className="flex items-center gap-2">
-            <span className="text-xl font-bold tracking-tight" style={{ color: 'var(--color-gold)' }}>
-              ♟ Gambit
-            </span>
-          </Link>
+          <GambitLogo />
 
           <nav className="flex items-center gap-3">
             {/* Online presence widget */}

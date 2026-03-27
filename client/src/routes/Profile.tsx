@@ -3,6 +3,7 @@ import { useNavigate, useSearchParams, Link } from 'react-router-dom';
 import { useAuth } from '@clerk/clerk-react';
 import { useAccount } from '../hooks/useAccount';
 import { fetchChessCom, fetchLichess } from '../lib/api';
+import { GambitLogo } from '../components/layout/GambitLogo';
 import type { ChessLevel, PreferredColor, Goal, Gender, ChessTitle } from '../data/types';
 
 // ─── Segmented control ────────────────────────────────────────────────────────
@@ -589,9 +590,7 @@ export function Profile() {
         }}
       >
         {isOnboarding ? (
-          <span style={{ color: 'var(--color-gold)', fontWeight: 700, fontSize: '1.1rem' }}>
-            ♟ Gambit
-          </span>
+          <GambitLogo linkTo="/profile" />
         ) : (
           <Link
             to="/"

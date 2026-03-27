@@ -4,6 +4,7 @@
   "description": "Master your openings. Own the board.",
   "start_url": "/",
   "display": "standalone",
+  "orientation": "portrait-primary",
   "background_color": "#0f1a0f",
   "theme_color": "#1a2e1a",
   "icons": [
@@ -11,7 +12,15 @@
       "src": "/favicon.svg",
       "sizes": "any",
       "type": "image/svg+xml",
-      "purpose": "any maskable"
+      "purpose": "any"
+    },
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
     }
-  ]
+  ],
+  "screenshots": [],
+  "categories": ["games", "education"]
 }
