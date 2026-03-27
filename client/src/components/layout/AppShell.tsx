@@ -54,14 +54,6 @@ export function AppShell() {
             {/* Online presence widget */}
             <OnlineWidget />
 
-            <Link
-              to="/dashboard"
-              className="text-sm font-medium transition-colors"
-              style={{ color: 'var(--color-text-muted)' }}
-            >
-              Progress
-            </Link>
-
             {/* Clerk UserButton with custom menu items */}
             <UserButton>
               <UserButton.MenuItems>
