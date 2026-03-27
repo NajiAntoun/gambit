@@ -102,8 +102,8 @@ export function Learn() {
             padding: '16px',
             gap: '12px',
             flexShrink: 0,
-            // Board column: width = min(available height minus chrome, half viewport width, 520px)
-            width: 'min(calc(100svh - 120px), 50vw, 520px)',
+            // Board column: give the board more room (60% of viewport, up to 600px)
+            width: 'min(calc(100svh - 120px), 60vw, 600px)',
           }}
         >
           <div style={{ width: '100%' }}>
