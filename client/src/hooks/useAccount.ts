@@ -1,7 +1,7 @@
-import { createContext, useContext, useState, useCallback, useEffect } from 'react';
+import { createContext, useContext, useState, useCallback, useEffect, useRef } from 'react';
 import { useAuth } from '@clerk/clerk-react';
 import type { Account } from '../data/types';
-import { fetchAccount, patchAccount, upsertAccount } from '../lib/api';
+import { fetchAccount, patchAccount, upsertAccount, fetchChessCom, fetchLichess } from '../lib/api';
 
 interface AccountContextValue {
   account:     Account | null;
@@ -46,6 +46,56 @@ export function useAccountState(): AccountContextValue {
 
     return () => { cancelled = true; };
   }, [getToken]);
+
+  // ── Background rating refresh — once per session after account loads ──────
+
+  const didRefreshRef = useRef(false);
+
+  useEffect(() => {
+    if (!account || didRefreshRef.current) return;
+    if (!account.chessComUsername && !account.lichessUsername) return;
+
+    didRefreshRef.current = true;
+
+    // Fire-and-forget — non-critical, errors silently swallowed
+    void (async () => {
+      try {
+        const token = await getToken();
+        if (!token) return;
+
+        const updates: Partial<Account> = {};
+
+        if (account.chessComUsername) {
+          try {
+            const r = await fetchChessCom(account.chessComUsername);
+            updates.chessComRapid  = r.rapid;
+            updates.chessComBlitz  = r.blitz;
+            updates.chessComBullet = r.bullet;
+          } catch {
+            // Chess.com unavailable — keep existing values
+          }
+        }
+
+        if (account.lichessUsername) {
+          try {
+            const r = await fetchLichess(account.lichessUsername);
+            updates.lichessRapid  = r.rapid;
+            updates.lichessBlitz  = r.blitz;
+            updates.lichessBullet = r.bullet;
+          } catch {
+            // Lichess unavailable — keep existing values
+          }
+        }
+
+        if (Object.keys(updates).length > 0) {
+          const updated = await patchAccount(updates, token);
+          setAccount(updated);
+        }
+      } catch {
+        // Refresh is non-critical — swallow silently
+      }
+    })();
+  }, [account, getToken]);
 
   const saveAccount = useCallback(
     async (fields: Partial<Account>) => {

@@ -33,9 +33,9 @@ function avatarColor(name: string): string {
 // ─── Single user row ─────────────────────────────────────────────────────────
 
 function UserRow({ user }: { user: OnlineUser }) {
-  const name  = user.displayName ?? 'Anonymous';
-  const flag  = countryToFlag(user.country);
-  const level = user.chessLevel ? LEVEL_ICON[user.chessLevel] ?? '' : '';
+  const name   = user.displayName ?? 'Anonymous';
+  const flag   = countryToFlag(user.country);
+  const level  = user.chessLevel ? LEVEL_ICON[user.chessLevel] ?? '' : '';
   const gender = user.gender ? GENDER_ICON[user.gender] ?? '' : '';
   const initial = name[0].toUpperCase();
   const color   = avatarColor(name);
@@ -87,6 +87,21 @@ function UserRow({ user }: { user: OnlineUser }) {
         {level && (
           <span style={{ fontSize: '14px', lineHeight: 1 }} title={user.chessLevel ?? ''}>
             {level}
+          </span>
+        )}
+        {user.rating !== null && (
+          <span
+            style={{
+              fontSize: '12px',
+              fontWeight: 700,
+              color: 'var(--color-gold)',
+              background: 'rgba(201,168,76,0.1)',
+              padding: '1px 5px',
+              borderRadius: '4px',
+              lineHeight: 1.5,
+            }}
+          >
+            {user.rating}
           </span>
         )}
       </div>

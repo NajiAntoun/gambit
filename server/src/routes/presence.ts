@@ -6,11 +6,12 @@ export const presenceRouter = Router();
 // ─── In-memory presence store ─────────────────────────────────────────────────
 
 interface OnlineEntry {
-  displayName:    string | null;
-  country:        string | null;
-  gender:         string | null;
-  chessLevel:     string | null;
-  lastSeen:       number; // epoch ms
+  displayName: string | null;
+  country:     string | null;
+  gender:      string | null;
+  chessLevel:  string | null;
+  rating:      number | null; // headline rating sent by client
+  lastSeen:    number; // epoch ms
 }
 
 const store = new Map<string, OnlineEntry>();
@@ -30,13 +31,14 @@ presenceRouter.post('/', requireAuth(), (req: Request, res: Response) => {
   const { userId } = getAuth(req);
   if (!userId) { res.status(401).json({ error: 'Unauthorized' }); return; }
 
-  const { displayName, country, gender, chessLevel } = req.body as Partial<OnlineEntry>;
+  const { displayName, country, gender, chessLevel, rating } = req.body as Partial<OnlineEntry>;
 
   store.set(userId, {
     displayName: displayName ?? null,
     country:     country     ?? null,
     gender:      gender      ?? null,
     chessLevel:  chessLevel  ?? null,
+    rating:      typeof rating === 'number' ? rating : null,
     lastSeen:    Date.now(),
   });
 
@@ -64,6 +66,7 @@ presenceRouter.get('/', requireAuth(), (_req: Request, res: Response) => {
         country:     entry.country,
         gender:      entry.gender,
         chessLevel:  entry.chessLevel,
+        rating:      entry.rating,
       });
     }
   }

@@ -33,10 +33,34 @@ export async function initDb(): Promise<void> {
     )
   `);
 
-  // Idempotent migration — adds gender column to existing tables
+  // Idempotent migrations — add columns introduced after initial schema
+
   await pool.query(`
     ALTER TABLE accounts
     ADD COLUMN IF NOT EXISTS gender TEXT
       CHECK (gender IN ('male', 'female', 'nonbinary', 'prefer_not_to_say'))
   `);
+
+  await pool.query(`
+    ALTER TABLE accounts
+    ADD COLUMN IF NOT EXISTS chess_title TEXT
+      CHECK (chess_title IN ('GM','IM','FM','CM','NM','WGM','WIM','WFM','WCM'))
+  `);
+
+  await pool.query(`ALTER TABLE accounts ADD COLUMN IF NOT EXISTS fide_id TEXT`);
+
+  await pool.query(`
+    ALTER TABLE accounts
+    ADD COLUMN IF NOT EXISTS fide_rating SMALLINT
+      CHECK (fide_rating >= 0 AND fide_rating <= 4000)
+  `);
+
+  await pool.query(`ALTER TABLE accounts ADD COLUMN IF NOT EXISTS chess_com_username TEXT`);
+  await pool.query(`ALTER TABLE accounts ADD COLUMN IF NOT EXISTS chess_com_rapid   SMALLINT`);
+  await pool.query(`ALTER TABLE accounts ADD COLUMN IF NOT EXISTS chess_com_blitz   SMALLINT`);
+  await pool.query(`ALTER TABLE accounts ADD COLUMN IF NOT EXISTS chess_com_bullet  SMALLINT`);
+  await pool.query(`ALTER TABLE accounts ADD COLUMN IF NOT EXISTS lichess_username  TEXT`);
+  await pool.query(`ALTER TABLE accounts ADD COLUMN IF NOT EXISTS lichess_rapid     SMALLINT`);
+  await pool.query(`ALTER TABLE accounts ADD COLUMN IF NOT EXISTS lichess_blitz     SMALLINT`);
+  await pool.query(`ALTER TABLE accounts ADD COLUMN IF NOT EXISTS lichess_bullet    SMALLINT`);
 }

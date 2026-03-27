@@ -3,15 +3,27 @@ export type ChessLevel = 'beginner' | 'intermediate' | 'advanced';
 export type PreferredColor = 'white' | 'black' | 'both';
 export type Goal = 'casual' | 'tournament' | 'rating';
 export type Gender = 'male' | 'female' | 'nonbinary' | 'prefer_not_to_say';
+export type ChessTitle = 'GM' | 'IM' | 'FM' | 'CM' | 'NM' | 'WGM' | 'WIM' | 'WFM' | 'WCM';
 
 export interface Account {
-  displayName:    string | null;
-  chessLevel:     ChessLevel | null;
-  preferredColor: PreferredColor | null;
-  goal:           Goal | null;
-  birthYear:      number | null;
-  country:        string | null;
-  gender:         Gender | null;
+  displayName:      string | null;
+  chessLevel:       ChessLevel | null;
+  preferredColor:   PreferredColor | null;
+  goal:             Goal | null;
+  birthYear:        number | null;
+  country:          string | null;
+  gender:           Gender | null;
+  chessTitle:       ChessTitle | null;
+  fideId:           string | null;
+  fideRating:       number | null;
+  chessComUsername: string | null;
+  chessComRapid:    number | null;
+  chessComBlitz:    number | null;
+  chessComBullet:   number | null;
+  lichessUsername:  string | null;
+  lichessRapid:     number | null;
+  lichessBlitz:     number | null;
+  lichessBullet:    number | null;
 }
 
 export interface OnlineUser {
@@ -19,6 +31,8 @@ export interface OnlineUser {
   country:     string | null;
   gender:      string | null;
   chessLevel:  string | null;
+  /** Best available rating: FIDE → platform rapid → platform blitz → null */
+  rating:      number | null;
 }
 export type Difficulty = 'beginner' | 'intermediate' | 'advanced';
 export type ProgressStatus = 'not-started' | 'learning' | 'mastered';

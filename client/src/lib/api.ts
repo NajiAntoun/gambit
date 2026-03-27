@@ -108,10 +108,61 @@ export async function patchAccount(
   return data.account;
 }
 
+// ─── Chess.com ────────────────────────────────────────────────────────────────
+
+export interface ChessComRatings {
+  rapid:  number | null;
+  blitz:  number | null;
+  bullet: number | null;
+}
+
+/** Fetches ratings directly from Chess.com's public API (no key, CORS-safe). */
+export async function fetchChessCom(username: string): Promise<ChessComRatings> {
+  const res = await fetch(
+    `https://api.chess.com/pub/player/${encodeURIComponent(username.toLowerCase())}/stats`,
+  );
+  if (!res.ok) throw new Error(`Chess.com user not found`);
+  const data = await res.json() as Record<string, { last?: { rating?: number } } | undefined>;
+  return {
+    rapid:  data.chess_rapid?.last?.rating  ?? null,
+    blitz:  data.chess_blitz?.last?.rating  ?? null,
+    bullet: data.chess_bullet?.last?.rating ?? null,
+  };
+}
+
+// ─── Lichess ──────────────────────────────────────────────────────────────────
+
+export interface LichessRatings {
+  rapid:  number | null;
+  blitz:  number | null;
+  bullet: number | null;
+}
+
+/** Fetches ratings directly from Lichess's public API (no key, CORS-safe). */
+export async function fetchLichess(username: string): Promise<LichessRatings> {
+  const res = await fetch(
+    `https://lichess.org/api/user/${encodeURIComponent(username)}`,
+    { headers: { Accept: 'application/json' } },
+  );
+  if (!res.ok) throw new Error(`Lichess user not found`);
+  const data = await res.json() as {
+    perfs?: {
+      rapid?:  { rating?: number };
+      blitz?:  { rating?: number };
+      bullet?: { rating?: number };
+    };
+  };
+  return {
+    rapid:  data.perfs?.rapid?.rating  ?? null,
+    blitz:  data.perfs?.blitz?.rating  ?? null,
+    bullet: data.perfs?.bullet?.rating ?? null,
+  };
+}
+
 // ─── Presence ─────────────────────────────────────────────────────────────────
 
 export async function sendHeartbeat(
-  user: Pick<OnlineUser, 'displayName' | 'country' | 'gender' | 'chessLevel'>,
+  user: Pick<OnlineUser, 'displayName' | 'country' | 'gender' | 'chessLevel' | 'rating'>,
   token: string,
 ): Promise<void> {
   await fetch(`${API_URL}/api/presence`, {

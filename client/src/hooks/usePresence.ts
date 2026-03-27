@@ -25,11 +25,24 @@ export function usePresence() {
     try {
       const token = await getToken();
       if (!token) return;
+
+      // Headline rating: FIDE → Chess.com rapid → Lichess rapid → blitz fallbacks
+      const headlineRating =
+        account?.fideRating       ??
+        account?.chessComRapid    ??
+        account?.lichessRapid     ??
+        account?.chessComBlitz    ??
+        account?.lichessBlitz     ??
+        account?.chessComBullet   ??
+        account?.lichessBullet    ??
+        null;
+
       await sendHeartbeat({
         displayName: account?.displayName ?? null,
         country:     account?.country     ?? null,
         gender:      account?.gender      ?? null,
         chessLevel:  account?.chessLevel  ?? null,
+        rating:      headlineRating,
       }, token);
     } catch {
       // Presence is non-critical — swallow errors silently
