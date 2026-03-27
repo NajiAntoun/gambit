@@ -10,6 +10,8 @@ export const openings: Opening[] = [
     category: 'White Openings',
     userColor: 'white',
     difficulty: 'intermediate',
+    yearPopularized: 1561,
+    popularity: 5,
     description: 'The most classical of all king-pawn openings. White immediately puts pressure on the center by attacking the knight defending e5.',
     moves: [
       { san: 'e4',  color: 'w', explanation: 'Open the center, control d5 and f5, and free the bishop and queen. The most dynamic first move.' },
@@ -36,6 +38,8 @@ export const openings: Opening[] = [
     category: 'White Openings',
     userColor: 'white',
     difficulty: 'beginner',
+    yearPopularized: 1490,
+    popularity: 5,
     description: 'One of the oldest openings. White develops rapidly to the best squares and aims for central control with d4.',
     moves: [
       { san: 'e4',  color: 'w', explanation: 'Control the center and open lines for rapid development.' },
@@ -106,6 +110,8 @@ export const openings: Opening[] = [
     category: 'White Openings',
     userColor: 'white',
     difficulty: 'intermediate',
+    yearPopularized: 1490,
+    popularity: 5,
     description: "White offers a pawn to gain central control. The Queen's Gambit has been played at the highest levels for over a century.",
     moves: [
       { san: 'd4',  color: 'w', explanation: 'Control the center with the d-pawn and open lines for the dark-squared bishop and queen.' },
@@ -180,6 +186,8 @@ export const openings: Opening[] = [
     category: 'White Openings',
     userColor: 'white',
     difficulty: 'beginner',
+    yearPopularized: 1922,
+    popularity: 4,
     description: 'A solid, low-theory system where White builds a strong pawn structure with d4, Nf3, and Bf4. Hard to beat and easy to learn.',
     moves: [
       { san: 'd4',  color: 'w', explanation: 'Stake a claim in the center with the d-pawn.' },
@@ -205,6 +213,8 @@ export const openings: Opening[] = [
     category: 'White Openings',
     userColor: 'white',
     difficulty: 'intermediate',
+    yearPopularized: 1950,
+    popularity: 3,
     description: 'White builds a King\'s Indian setup in reverse, fianchettoing the bishop and launching a kingside attack.',
     moves: [
       { san: 'Nf3', color: 'w', explanation: 'A flexible first move. White delays revealing the central pawn structure, keeping maximum options open.' },
@@ -232,6 +242,8 @@ export const openings: Opening[] = [
     category: "Black vs King's Pawn (e4)",
     userColor: 'black',
     difficulty: 'advanced',
+    yearPopularized: 1947,
+    popularity: 5,
     description: "The most popular chess opening at the top level. Black fights for the initiative with ...a6, keeping maximum flexibility.",
     moves: [
       { san: 'e4',  color: 'w', explanation: 'White opens the center.' },
@@ -258,6 +270,8 @@ export const openings: Opening[] = [
     category: "Black vs King's Pawn (e4)",
     userColor: 'black',
     difficulty: 'advanced',
+    yearPopularized: 1901,
+    popularity: 4,
     description: 'The Dragon is one of the sharpest openings in chess. Black fianchettoes the bishop on g7 for a ferocious counterattack.',
     moves: [
       { san: 'e4',  color: 'w', explanation: 'White opens the game.' },
@@ -284,6 +298,8 @@ export const openings: Opening[] = [
     category: "Black vs King's Pawn (e4)",
     userColor: 'black',
     difficulty: 'intermediate',
+    yearPopularized: 1834,
+    popularity: 4,
     description: 'Black builds a solid pawn chain and counterattacks in the center. The French leads to rich strategic battles.',
     moves: [
       { san: 'e4',  color: 'w', explanation: 'White controls the center.' },
@@ -355,6 +371,8 @@ export const openings: Opening[] = [
     category: "Black vs King's Pawn (e4)",
     userColor: 'black',
     difficulty: 'intermediate',
+    yearPopularized: 1886,
+    popularity: 4,
     description: 'A solid, reliable defense. Black plays c6 to support d5, avoiding the cramped positions of the French while keeping a solid structure.',
     moves: [
       { san: 'e4',  color: 'w', explanation: 'White opens the center.' },
@@ -383,6 +401,8 @@ export const openings: Opening[] = [
     category: "Black vs Queen's Pawn (d4)",
     userColor: 'black',
     difficulty: 'advanced',
+    yearPopularized: 1940,
+    popularity: 4,
     description: 'Black allows White to build a big center then strikes back with ...e5. The KID leads to some of the most exciting chess ever played.',
     moves: [
       { san: 'd4',  color: 'w', explanation: 'White builds the center.' },
@@ -409,6 +429,8 @@ export const openings: Opening[] = [
     category: "Black vs Queen's Pawn (d4)",
     userColor: 'black',
     difficulty: 'advanced',
+    yearPopularized: 1920,
+    popularity: 5,
     description: 'One of the most respected openings at the top level. Black pins the Nc3 with Bb4, fighting for the center through piece activity rather than pawns.',
     moves: [
       { san: 'd4',  color: 'w', explanation: 'White opens.' },
@@ -435,6 +457,8 @@ export const openings: Opening[] = [
     category: "Black vs Queen's Pawn (d4)",
     userColor: 'black',
     difficulty: 'intermediate',
+    yearPopularized: 1490,
+    popularity: 5,
     description: 'The classical and most solid response to the Queen\'s Gambit. Black builds a sound position and waits for the right moment to counterattack.',
     moves: [
       { san: 'd4',  color: 'w', explanation: 'White opens.' },
@@ -461,6 +485,8 @@ export const openings: Opening[] = [
     category: "Black vs King's Pawn (e4)",
     userColor: 'black',
     difficulty: 'advanced',
+    yearPopularized: 1923,
+    popularity: 3,
     description: 'Black builds a compact structure with pawns on d6 and e6. Flexible and solid, it was a favorite of Kasparov and Anand.',
     moves: [
       { san: 'e4',  color: 'w', explanation: 'White opens.' },
@@ -487,6 +513,8 @@ export const openings: Opening[] = [
     category: "Black vs King's Pawn (e4)",
     userColor: 'black',
     difficulty: 'advanced',
+    yearPopularized: 1970,
+    popularity: 3,
     description: 'A sharper line of the Najdorf — included as a reference. See the main Najdorf entry for the primary line.',
     moves: [
       { san: 'e4',  color: 'w', explanation: 'White opens.' },
@@ -515,6 +543,8 @@ export const openings: Opening[] = [
     category: 'White Openings',
     userColor: 'white',
     difficulty: 'intermediate',
+    yearPopularized: 1750,
+    popularity: 3,
     description: 'White strikes at the center early with 3.d4, opening the game before Black can consolidate. A favorite of Garry Kasparov at the highest level.',
     moves: [
       { san: 'e4',  color: 'w', explanation: 'Seize the center immediately and open lines for all of White\'s pieces. The most direct path to an active game.' },
@@ -551,6 +581,8 @@ export const openings: Opening[] = [
     category: 'White Openings',
     userColor: 'white',
     difficulty: 'advanced',
+    yearPopularized: 1560,
+    popularity: 2,
     description: 'The most daring and romantic of all openings. White sacrifices a pawn on move two to destroy Black\'s central pawn and seize a lightning-fast initiative.',
     moves: [
       { san: 'e4',  color: 'w', explanation: 'Open the center and launch the game with maximum energy. The King\'s Gambit lives or dies by attacking speed.' },
@@ -647,6 +679,8 @@ export const openings: Opening[] = [
     category: 'White Openings',
     userColor: 'white',
     difficulty: 'intermediate',
+    yearPopularized: 1842,
+    popularity: 2,
     description: 'White develops the queen\'s knight before Nf3, keeping the option of f4 or the Vienna Gambit. A solid yet aggressive system with rich strategic ideas.',
     moves: [
       { san: 'e4',  color: 'w', explanation: 'Open the center and begin active piece development — the Vienna builds on this strong foundation.' },
@@ -733,6 +767,8 @@ export const openings: Opening[] = [
     category: 'White Openings',
     userColor: 'white',
     difficulty: 'beginner',
+    yearPopularized: 1619,
+    popularity: 2,
     description: 'White develops the bishop immediately to target f7, one of the most classical ideas in chess. A solid, flexible opening that avoids heavy theory.',
     moves: [
       { san: 'e4',  color: 'w', explanation: 'Open the center and immediately begin rapid development. The Bishop\'s Opening builds on this classical foundation.' },
@@ -772,6 +808,8 @@ export const openings: Opening[] = [
     category: "Black vs King's Pawn (e4)",
     userColor: 'black',
     difficulty: 'intermediate',
+    yearPopularized: 1475,
+    popularity: 3,
     description: 'Black immediately challenges White\'s e4 pawn on move one. A direct and practical choice that avoids mainstream theory and leads to active piece play.',
     moves: [
       { san: 'e4',  color: 'w', explanation: 'White opens the center.' },
@@ -860,6 +898,8 @@ export const openings: Opening[] = [
     category: "Black vs King's Pawn (e4)",
     userColor: 'black',
     difficulty: 'intermediate',
+    yearPopularized: 1940,
+    popularity: 3,
     description: 'Black allows White to build a large pawn center then undermines it from the flanks. A hypermodern defense with rich counterattacking possibilities.',
     moves: [
       { san: 'e4',  color: 'w', explanation: 'White builds the center.' },
@@ -948,6 +988,8 @@ export const openings: Opening[] = [
     category: "Black vs King's Pawn (e4)",
     userColor: 'black',
     difficulty: 'intermediate',
+    yearPopularized: 1842,
+    popularity: 4,
     description: 'Black immediately counter-attacks e4 with 2...Nf6 rather than defending e5. The Petroff is renowned for its solidity and has been used by many World Champions.',
     moves: [
       { san: 'e4',  color: 'w', explanation: 'White opens the center.' },
@@ -986,6 +1028,8 @@ export const openings: Opening[] = [
     category: "Black vs King's Pawn (e4)",
     userColor: 'black',
     difficulty: 'advanced',
+    yearPopularized: 1921,
+    popularity: 3,
     description: 'Named for the 4th World Champion, Black invites White to chase the knight across the board — then strikes back at the overextended center. Provocative and counterattacking.',
     moves: [
       { san: 'e4',  color: 'w', explanation: 'White opens the center.' },
@@ -1025,6 +1069,8 @@ export const openings: Opening[] = [
     category: "Black vs Queen's Pawn (d4)",
     userColor: 'black',
     difficulty: 'advanced',
+    yearPopularized: 1922,
+    popularity: 4,
     description: 'Black allows White to build the ultimate pawn center, then attacks it head-on with ...c5 and the g7 bishop. The Grünfeld is the ultimate hypermodern counterattacking weapon.',
     moves: [
       { san: 'd4',  color: 'w', explanation: 'White opens.' },
@@ -1114,6 +1160,8 @@ export const openings: Opening[] = [
     category: "Black vs Queen's Pawn (d4)",
     userColor: 'black',
     difficulty: 'intermediate',
+    yearPopularized: 1920,
+    popularity: 4,
     description: 'Black prevents the Italian-style e4 advance with ...b6 and Ba6, fighting for the center with pieces rather than pawns. A solid, strategic favorite.',
     moves: [
       { san: 'd4',  color: 'w', explanation: 'White opens.' },
@@ -1152,6 +1200,8 @@ export const openings: Opening[] = [
     category: "Black vs Queen's Pawn (d4)",
     userColor: 'black',
     difficulty: 'intermediate',
+    yearPopularized: 1789,
+    popularity: 3,
     description: 'Black plays 1...f5, immediately fighting for the e4 square. The Dutch is aggressive and unbalancing — Black fights for the initiative from move one.',
     moves: [
       { san: 'd4',  color: 'w', explanation: 'White opens with the queen\'s pawn.' },
@@ -1240,6 +1290,8 @@ export const openings: Opening[] = [
     category: "Black vs Queen's Pawn (d4)",
     userColor: 'black',
     difficulty: 'advanced',
+    yearPopularized: 1950,
+    popularity: 3,
     description: 'Black sacrifices central pawn symmetry for dynamic counterplay. With the fianchettoed bishop and active pieces, Black fights for the initiative in an unbalanced position.',
     moves: [
       { san: 'd4',  color: 'w', explanation: 'White opens.' },

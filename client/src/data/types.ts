@@ -73,6 +73,9 @@ export interface OpeningFork {
   options: ForkOption[];
 }
 
+/** 1 = niche/rare, 2 = uncommon, 3 = common, 4 = popular, 5 = elite (top-level staple) */
+export type Popularity = 1 | 2 | 3 | 4 | 5;
+
 export interface Opening {
   id: string;
   name: string;
@@ -83,6 +86,10 @@ export interface Opening {
   difficulty: Difficulty;
   /** Brief description shown on the opening card */
   description: string;
+  /** Approximate year the opening was first played or popularized */
+  yearPopularized: number;
+  /** How frequently it appears in top-level tournament play */
+  popularity: Popularity;
   moves: OpeningMove[];
   /** Optional branching points — accept/decline gambit decisions etc. */
   forks?: OpeningFork[];
