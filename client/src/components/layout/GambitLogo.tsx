@@ -71,7 +71,7 @@ export function GambitLogo({ linkTo = '/' }: { linkTo?: string }) {
         <span style={{ position: 'relative', display: 'inline-block', width: '2.8rem', height: '2.8rem', flexShrink: 0 }}>
           <span
             className="gambit-logo-king"
-            style={{ position: 'absolute', top: 0, left: 0, fontSize: '2.8rem', lineHeight: 1, color: 'rgba(201,168,76,0.75)' }}
+            style={{ position: 'absolute', top: 0, left: 0, fontSize: '3.4rem', lineHeight: 1, color: 'rgba(201,168,76,0.85)' }}
             aria-hidden
           >
             ♚
@@ -98,24 +98,36 @@ export function GambitLogo({ linkTo = '/' }: { linkTo?: string }) {
             alignItems: 'flex-start',
           }}
         >
-          {/* G with crown perched above */}
+          {/* G with flat SVG crown centered over the curved part */}
           <span style={{ position: 'relative', display: 'inline-block' }}>
             G
-            <span
+            {/* Crown: custom SVG — wide & flat so it doesn't push header height.
+                Shifted left of 50% to land over the bowl of the G, not the bar. */}
+            <svg
               className="gambit-logo-crown"
+              viewBox="0 0 30 13"
+              width="22"
+              height="10"
               style={{
                 position: 'absolute',
-                top: '-0.6em',
+                top: '-11px',
                 left: '50%',
-                transform: 'translateX(-50%)',
-                fontSize: '0.7em',
-                lineHeight: 1,
-                color: 'var(--color-gold)',
+                transform: 'translateX(-62%)',
+                display: 'block',
+                overflow: 'visible',
               }}
               aria-hidden
             >
-              ♛
-            </span>
+              {/* 5-point crown: wide base, three peaks, two dips */}
+              <path
+                d="M0,13 L0,7 L6,11 L10,2 L15,6.5 L20,2 L24,11 L30,7 L30,13 Z"
+                fill="#c9a84c"
+              />
+              {/* Three jewel dots on the tips */}
+              <circle cx="10" cy="2"   r="1.8" fill="#e8c96a"/>
+              <circle cx="15" cy="6.5" r="1.4" fill="#e8c96a"/>
+              <circle cx="20" cy="2"   r="1.8" fill="#e8c96a"/>
+            </svg>
           </span>
           ambit
         </span>
