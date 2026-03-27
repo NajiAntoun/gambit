@@ -3,6 +3,7 @@ import type { Opening, Popularity } from '../../data/types';
 import { useProgress } from '../../hooks/useProgress';
 import { DifficultyBadge } from './DifficultyBadge';
 import { ProgressBadge } from './ProgressBadge';
+import { MiniBoard } from './MiniBoard';
 
 const POPULARITY_LABEL: Record<Popularity, string> = {
   1: 'Rare',
@@ -36,6 +37,8 @@ export function OpeningCard({ opening }: OpeningCardProps) {
         transition: 'border-color 0.15s, background 0.15s',
         display: 'flex',
         flexDirection: 'column',
+        position: 'relative',
+        overflow: 'hidden',
       }}
       onMouseEnter={(e) => {
         (e.currentTarget as HTMLButtonElement).style.borderColor = 'var(--color-gold)';
@@ -44,59 +47,61 @@ export function OpeningCard({ opening }: OpeningCardProps) {
         (e.currentTarget as HTMLButtonElement).style.borderColor = 'var(--color-border)';
       }}
     >
-      {/* Header: name + eco */}
-      <div className="flex items-start justify-between gap-2 mb-1">
+      {/* Mini board watermark — bottom right */}
+      <div
+        style={{
+          position: 'absolute',
+          bottom: '-4px',
+          right: '-4px',
+          color: 'var(--color-gold)',
+          opacity: 0.12,
+          pointerEvents: 'none',
+        }}
+      >
+        <MiniBoard moves={opening.moves} size={88} />
+      </div>
+
+      {/* Header: name + metadata (ECO · year · popularity) */}
+      <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: '8px', marginBottom: '4px', position: 'relative' }}>
         <span style={{ fontWeight: 600, fontSize: '15px', color: 'var(--color-text)', lineHeight: 1.3 }}>
           {opening.name}
         </span>
-        <span style={{ fontSize: '11px', color: 'var(--color-text-muted)', flexShrink: 0 }}>
-          {opening.eco}
-        </span>
-      </div>
-
-      {/* Description */}
-      <p style={{ fontSize: '12px', color: 'var(--color-text-muted)', margin: '0 0 10px', lineHeight: 1.5, flex: 1 }}>
-        {opening.description}
-      </p>
-
-      {/* Bottom row: badges + stats */}
-      <div style={{ display: 'flex', alignItems: 'center', gap: '6px', flexWrap: 'wrap' }}>
-        <DifficultyBadge difficulty={opening.difficulty} />
-        <ProgressBadge status={progress.status} />
-
-        {/* Spacer pushes right-side badges to the end */}
-        <span style={{ flex: 1 }} />
-
-        {/* Year */}
         <span
           style={{
             fontSize: '10px',
             color: 'var(--color-text-muted)',
-            opacity: 0.7,
-            whiteSpace: 'nowrap',
+            flexShrink: 0,
+            display: 'flex',
+            alignItems: 'center',
+            gap: '5px',
+            lineHeight: 1,
+            marginTop: '3px',
           }}
         >
-          c.{'\u2009'}{opening.yearPopularized}
+          <span>{opening.eco}</span>
+          <span style={{ opacity: 0.4 }}>·</span>
+          <span style={{ opacity: 0.6 }}>c.{'\u2009'}{opening.yearPopularized}</span>
+          <span
+            style={{
+              fontWeight: 600,
+              letterSpacing: '0.04em',
+              color: opening.popularity >= 4 ? 'var(--color-gold)' : undefined,
+            }}
+          >
+            {POPULARITY_LABEL[opening.popularity]}
+          </span>
         </span>
+      </div>
 
-        {/* Popularity pill */}
-        <span
-          style={{
-            fontSize: '10px',
-            fontWeight: 600,
-            letterSpacing: '0.04em',
-            color: opening.popularity >= 4 ? 'var(--color-gold)' : 'var(--color-text-muted)',
-            background: opening.popularity >= 4 ? 'rgba(201,168,76,0.12)' : 'rgba(255,255,255,0.06)',
-            border: `1px solid ${opening.popularity >= 4 ? 'rgba(201,168,76,0.25)' : 'rgba(255,255,255,0.08)'}`,
-            borderRadius: '4px',
-            padding: '2px 6px',
-            whiteSpace: 'nowrap',
-          }}
-        >
-          {POPULARITY_LABEL[opening.popularity]}
-        </span>
+      {/* Description */}
+      <p style={{ fontSize: '12px', color: 'var(--color-text-muted)', margin: '0 0 10px', lineHeight: 1.5, flex: 1, position: 'relative' }}>
+        {opening.description}
+      </p>
 
-        {/* Fork lines badge */}
+      {/* Bottom row: badges only — compact, always fits */}
+      <div style={{ display: 'flex', alignItems: 'center', gap: '6px', position: 'relative' }}>
+        <DifficultyBadge difficulty={opening.difficulty} />
+        <ProgressBadge status={progress.status} />
         {forkLines > 0 && (
           <span
             style={{
