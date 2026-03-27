@@ -159,47 +159,50 @@ export function Quiz() {
   };
 
   return (
-    <div style={{ minHeight: '100svh', display: 'flex', flexDirection: 'column', background: 'var(--color-bg-dark)' }}>
+    <div style={{ height: '100svh', display: 'flex', flexDirection: 'column', background: 'var(--color-bg-dark)', overflow: 'hidden' }}>
       {/* Top bar */}
       <div
         style={{
           display: 'flex',
           alignItems: 'center',
           gap: '12px',
-          padding: '12px 16px',
+          padding: '10px 16px',
           borderBottom: '1px solid var(--color-border)',
           background: 'var(--color-bg-card)',
+          flexShrink: 0,
         }}
       >
         <button
           onClick={() => navigate(`/mode/${opening.id}`)}
-          style={{ background: 'none', border: 'none', color: 'var(--color-text-muted)', cursor: 'pointer', fontSize: '18px', padding: 0 }}
+          style={{ background: 'none', border: 'none', color: 'var(--color-text-muted)', cursor: 'pointer', fontSize: '18px', padding: '4px', minHeight: '36px', minWidth: '36px' }}
         >
           ←
         </button>
         <div style={{ flex: 1 }}>
           <div style={{ fontWeight: 700, fontSize: '15px', color: 'var(--color-text)' }}>{opening.name}</div>
-          <div style={{ fontSize: '12px', color: 'var(--color-text-muted)' }}>Quiz Mode</div>
+          <div style={{ fontSize: '11px', color: 'var(--color-text-muted)' }}>Quiz Mode</div>
         </div>
-        {/* Score bar */}
+        {/* Score */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
           <span style={{ fontSize: '13px', color: '#4ade80', fontWeight: 600 }}>{correct} ✓</span>
           {wrong > 0 && <span style={{ fontSize: '13px', color: '#f87171', fontWeight: 600 }}>{wrong} ✗</span>}
         </div>
       </div>
 
-      {/* Board area */}
+      {/* Board area — fills remaining height */}
       <div
         style={{
           flex: 1,
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
-          padding: '16px',
-          gap: '16px',
+          justifyContent: 'center',
+          padding: '12px 16px',
+          gap: '12px',
+          width: '100%',
           maxWidth: '640px',
           margin: '0 auto',
-          width: '100%',
+          minHeight: 0,
         }}
       >
         {/* Status */}
@@ -234,15 +237,17 @@ export function Quiz() {
           {statusMessage()}
         </div>
 
-        {/* Board */}
-        <ChessBoard
-          position={fen}
-          orientation={opening.userColor}
-          interactive={phase === 'waiting'}
-          lastMove={lastMove}
-          highlightSquares={highlightSquares}
-          onMove={handleMove}
-        />
+        {/* Board — constrained so progress + restart stay visible */}
+        <div style={{ width: '100%', maxWidth: 'min(calc(100svh - 220px), calc(100vw - 2rem), 520px)' }}>
+          <ChessBoard
+            position={fen}
+            orientation={opening.userColor}
+            interactive={phase === 'waiting'}
+            lastMove={lastMove}
+            highlightSquares={highlightSquares}
+            onMove={handleMove}
+          />
+        </div>
 
         {/* Progress bar */}
         <div style={{ width: '100%' }}>

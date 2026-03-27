@@ -36,7 +36,7 @@ export function ChessBoard({
   }
 
   return (
-    <div style={{ width: '100%', maxWidth: 'min(calc(100vw - 2rem), 560px)', aspectRatio: '1' }}>
+    <div style={{ width: '100%', aspectRatio: '1' }}>
       <Chessboard
         options={{
           position,

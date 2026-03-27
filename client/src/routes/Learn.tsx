@@ -11,7 +11,6 @@ export function Learn() {
   const navigate = useNavigate();
   const opening = getOpeningById(openingId ?? '');
   const [showAiPanel, setShowAiPanel] = useState(false);
-  const moveListRef = useRef<HTMLDivElement>(null);
   const activeRef = useRef<HTMLButtonElement>(null);
 
   const { moveIndex, fen, lastMove, currentMove, isAtStart, isAtEnd, next, prev, reset, goTo } =
@@ -54,219 +53,237 @@ export function Learn() {
   };
 
   return (
-    <div style={{ minHeight: '100svh', display: 'flex', flexDirection: 'column', background: 'var(--color-bg-dark)' }}>
+    <div style={{ height: '100svh', display: 'flex', flexDirection: 'column', background: 'var(--color-bg-dark)', overflow: 'hidden' }}>
       {/* Top bar */}
       <div
         style={{
           display: 'flex',
           alignItems: 'center',
           gap: '12px',
-          padding: '12px 16px',
+          padding: '10px 16px',
           borderBottom: '1px solid var(--color-border)',
           background: 'var(--color-bg-card)',
+          flexShrink: 0,
         }}
       >
         <button
           onClick={() => navigate(`/mode/${opening.id}`)}
-          style={{ background: 'none', border: 'none', color: 'var(--color-text-muted)', cursor: 'pointer', fontSize: '18px', padding: 0, lineHeight: 1 }}
+          style={{ background: 'none', border: 'none', color: 'var(--color-text-muted)', cursor: 'pointer', fontSize: '18px', padding: '4px', lineHeight: 1, minHeight: '36px', minWidth: '36px' }}
         >
           ←
         </button>
         <div style={{ flex: 1 }}>
           <div style={{ fontWeight: 700, fontSize: '15px', color: 'var(--color-text)' }}>{opening.name}</div>
-          <div style={{ fontSize: '12px', color: 'var(--color-text-muted)' }}>Learn Mode</div>
+          <div style={{ fontSize: '11px', color: 'var(--color-text-muted)' }}>Learn Mode</div>
         </div>
-        <div style={{ fontSize: '13px', color: 'var(--color-text-muted)' }}>
+        <div style={{ fontSize: '13px', color: 'var(--color-text-muted)', fontVariantNumeric: 'tabular-nums' }}>
           {moveIndex + 1} / {opening.moves.length}
         </div>
       </div>
 
-      {/* Main layout: board + side panel */}
+      {/* Two-column body */}
       <div
         style={{
           flex: 1,
           display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          padding: '16px',
-          gap: '16px',
-          maxWidth: '1000px',
-          margin: '0 auto',
-          width: '100%',
+          flexDirection: 'row',
+          overflow: 'hidden',
+          minHeight: 0,
         }}
       >
-        {/* Board */}
-        <div className="flex justify-center w-full">
-          <ChessBoard
-            position={fen}
-            orientation={opening.userColor}
-            lastMove={lastMove}
-            interactive={false}
-          />
-        </div>
-
-        {/* Controls */}
-        <div className="flex items-center gap-3 justify-center flex-wrap">
-          <Button variant="secondary" size="sm" onClick={reset} disabled={isAtStart}>
-            ⟪ Reset
-          </Button>
-          <Button variant="secondary" size="md" onClick={prev} disabled={isAtStart}>
-            ← Prev
-          </Button>
-          <Button variant={isAtEnd ? 'ghost' : 'primary'} size="md" onClick={next} disabled={isAtEnd}>
-            Next →
-          </Button>
-        </div>
-
-        {/* Move list */}
+        {/* Left: board + controls */}
         <div
-          ref={moveListRef}
           style={{
-            width: '100%',
-            background: 'var(--color-bg-card)',
-            border: '1px solid var(--color-border)',
-            borderRadius: '10px',
-            padding: '12px',
             display: 'flex',
-            flexWrap: 'wrap',
-            gap: '4px',
-            maxHeight: '120px',
-            overflowY: 'auto',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: '16px',
+            gap: '12px',
+            flexShrink: 0,
+            // Board column: width = min(available height minus chrome, half viewport width, 520px)
+            width: 'min(calc(100svh - 120px), 50vw, 520px)',
           }}
         >
-          {opening.moves.map((move, i) => {
-            const isUserMove = move.color === (opening.userColor === 'white' ? 'w' : 'b');
-            const isActive = i === moveIndex;
-            const moveNum = Math.floor(i / 2) + 1;
-            const showNumber = i % 2 === 0;
-            return (
-              <span key={i} style={{ display: 'flex', alignItems: 'center', gap: '2px' }}>
-                {showNumber && (
-                  <span style={{ fontSize: '12px', color: 'var(--color-text-muted)', minWidth: '20px' }}>
-                    {moveNum}.
-                  </span>
-                )}
-                <button
-                  ref={isActive ? activeRef : undefined}
-                  onClick={() => goTo(i)}
-                  style={{
-                    background: isActive ? 'var(--color-gold)' : 'transparent',
-                    color: isActive ? '#0f1a0f' : isUserMove ? 'var(--color-text)' : 'var(--color-text-muted)',
-                    border: 'none',
-                    borderRadius: '4px',
-                    padding: '2px 6px',
-                    fontSize: '13px',
-                    fontWeight: isActive ? 700 : 400,
-                    cursor: 'pointer',
-                    fontFamily: 'inherit',
-                  }}
-                >
-                  {move.san}
-                </button>
-              </span>
-            );
-          })}
+          <div style={{ width: '100%' }}>
+            <ChessBoard
+              position={fen}
+              orientation={opening.userColor}
+              lastMove={lastMove}
+              interactive={false}
+            />
+          </div>
+
+          {/* Controls */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <Button variant="secondary" size="sm" onClick={reset} disabled={isAtStart}>
+              ⟪ Reset
+            </Button>
+            <Button variant="secondary" size="md" onClick={prev} disabled={isAtStart}>
+              ← Prev
+            </Button>
+            <Button variant={isAtEnd ? 'ghost' : 'primary'} size="md" onClick={next} disabled={isAtEnd}>
+              Next →
+            </Button>
+          </div>
+
+          {isAtEnd && (
+            <Button variant="primary" size="md" onClick={() => navigate(`/quiz/${opening.id}`)}>
+              Try the Quiz →
+            </Button>
+          )}
         </div>
 
-        {/* Explanation panel */}
-        {currentMove && (
+        {/* Right: move list + explanation */}
+        <div
+          style={{
+            flex: 1,
+            display: 'flex',
+            flexDirection: 'column',
+            padding: '16px 16px 16px 0',
+            gap: '12px',
+            overflowY: 'auto',
+            minWidth: 0,
+            // Hide on very small screens (handled by media-equivalent check)
+          }}
+        >
+          {/* Move list */}
           <div
             style={{
-              width: '100%',
               background: 'var(--color-bg-card)',
               border: '1px solid var(--color-border)',
               borderRadius: '10px',
-              padding: '16px',
+              padding: '10px 12px',
+              display: 'flex',
+              flexWrap: 'wrap',
+              gap: '2px 4px',
+              flexShrink: 0,
             }}
           >
-            <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: '12px', marginBottom: '8px' }}>
-              <div>
-                <span
-                  style={{
-                    fontSize: '18px',
-                    fontWeight: 700,
-                    color: 'var(--color-gold)',
-                    marginRight: '8px',
-                  }}
-                >
-                  {currentMove.san}
-                </span>
-                <span style={{ fontSize: '12px', color: 'var(--color-text-muted)' }}>
-                  {currentMove.color === (opening.userColor === 'white' ? 'w' : 'b') ? 'Your move' : "Opponent's move"}
-                </span>
-              </div>
-              {!showAiPanel && (
-                <button
-                  onClick={handleAskGambit}
-                  style={{
-                    background: 'rgba(201,168,76,0.1)',
-                    border: '1px solid rgba(201,168,76,0.3)',
-                    borderRadius: '8px',
-                    padding: '6px 12px',
-                    color: 'var(--color-gold)',
-                    fontSize: '12px',
-                    fontWeight: 600,
-                    cursor: 'pointer',
-                    flexShrink: 0,
-                    whiteSpace: 'nowrap',
-                  }}
-                >
-                  Ask Gambit ✨
-                </button>
-              )}
+            <div style={{ width: '100%', fontSize: '11px', fontWeight: 700, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--color-text-muted)', marginBottom: '6px' }}>
+              Moves
             </div>
-            <p style={{ color: 'var(--color-text)', fontSize: '14px', lineHeight: 1.6, margin: 0 }}>
-              {currentMove.explanation}
-            </p>
+            {opening.moves.map((move, i) => {
+              const isUserMove = move.color === (opening.userColor === 'white' ? 'w' : 'b');
+              const isActive = i === moveIndex;
+              const moveNum = Math.floor(i / 2) + 1;
+              const showNumber = i % 2 === 0;
+              return (
+                <span key={i} style={{ display: 'inline-flex', alignItems: 'center', gap: '1px' }}>
+                  {showNumber && (
+                    <span style={{ fontSize: '11px', color: 'var(--color-text-muted)', minWidth: '18px' }}>
+                      {moveNum}.
+                    </span>
+                  )}
+                  <button
+                    ref={isActive ? activeRef : undefined}
+                    onClick={() => goTo(i)}
+                    style={{
+                      background: isActive ? 'var(--color-gold)' : 'transparent',
+                      color: isActive ? '#0f1a0f' : isUserMove ? 'var(--color-text)' : 'var(--color-text-muted)',
+                      border: 'none',
+                      borderRadius: '4px',
+                      padding: '2px 5px',
+                      fontSize: '13px',
+                      fontWeight: isActive ? 700 : 400,
+                      cursor: 'pointer',
+                      fontFamily: 'inherit',
+                      minHeight: '28px',
+                    }}
+                  >
+                    {move.san}
+                  </button>
+                </span>
+              );
+            })}
+          </div>
 
-            {showAiPanel && (
-              <div
-                style={{
-                  marginTop: '12px',
-                  padding: '12px',
-                  background: 'rgba(201,168,76,0.06)',
-                  border: '1px solid rgba(201,168,76,0.2)',
-                  borderRadius: '8px',
-                }}
-              >
-                <div style={{ fontSize: '12px', color: 'var(--color-gold)', fontWeight: 600, marginBottom: '6px' }}>
-                  {aiLoading ? '⏳ Gambit is thinking...' : aiSource === 'ai' ? '✨ Gambit says:' : '📖 Gambit says:'}
+          {/* Explanation panel */}
+          {currentMove ? (
+            <div
+              style={{
+                background: 'var(--color-bg-card)',
+                border: '1px solid var(--color-border)',
+                borderRadius: '10px',
+                padding: '16px',
+                flex: 1,
+              }}
+            >
+              <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: '12px', marginBottom: '10px' }}>
+                <div>
+                  <span style={{ fontSize: '20px', fontWeight: 700, color: 'var(--color-gold)', marginRight: '8px' }}>
+                    {currentMove.san}
+                  </span>
+                  <span style={{ fontSize: '12px', color: 'var(--color-text-muted)' }}>
+                    {currentMove.color === (opening.userColor === 'white' ? 'w' : 'b') ? 'Your move' : "Opponent's move"}
+                  </span>
                 </div>
-                {aiLoading ? (
-                  <div style={{ color: 'var(--color-text-muted)', fontSize: '14px' }}>…</div>
-                ) : (
-                  <p style={{ color: 'var(--color-text)', fontSize: '14px', lineHeight: 1.6, margin: 0 }}>
-                    {aiExplanation}
-                  </p>
+                {!showAiPanel && (
+                  <button
+                    onClick={handleAskGambit}
+                    style={{
+                      background: 'rgba(201,168,76,0.1)',
+                      border: '1px solid rgba(201,168,76,0.3)',
+                      borderRadius: '8px',
+                      padding: '6px 12px',
+                      color: 'var(--color-gold)',
+                      fontSize: '12px',
+                      fontWeight: 600,
+                      cursor: 'pointer',
+                      flexShrink: 0,
+                      whiteSpace: 'nowrap',
+                      minHeight: '36px',
+                    }}
+                  >
+                    Ask Gambit ✨
+                  </button>
                 )}
               </div>
-            )}
-          </div>
-        )}
+              <p style={{ color: 'var(--color-text)', fontSize: '14px', lineHeight: 1.65, margin: 0 }}>
+                {currentMove.explanation}
+              </p>
 
-        {isAtStart && (
-          <div
-            style={{
-              width: '100%',
-              background: 'var(--color-bg-card)',
-              border: '1px solid var(--color-border)',
-              borderRadius: '10px',
-              padding: '16px',
-              textAlign: 'center',
-              color: 'var(--color-text-muted)',
-              fontSize: '14px',
-            }}
-          >
-            Press <strong style={{ color: 'var(--color-gold)' }}>Next →</strong> to start learning{' '}
-            {opening.name}.
-          </div>
-        )}
-
-        {isAtEnd && (
-          <Button variant="primary" size="lg" onClick={() => navigate(`/quiz/${opening.id}`)}>
-            Try the Quiz →
-          </Button>
-        )}
+              {showAiPanel && (
+                <div
+                  style={{
+                    marginTop: '14px',
+                    padding: '12px',
+                    background: 'rgba(201,168,76,0.06)',
+                    border: '1px solid rgba(201,168,76,0.2)',
+                    borderRadius: '8px',
+                  }}
+                >
+                  <div style={{ fontSize: '12px', color: 'var(--color-gold)', fontWeight: 600, marginBottom: '6px' }}>
+                    {aiLoading ? '⏳ Gambit is thinking...' : aiSource === 'ai' ? '✨ Gambit says:' : '📖 Gambit says:'}
+                  </div>
+                  {aiLoading ? (
+                    <div style={{ color: 'var(--color-text-muted)', fontSize: '14px' }}>…</div>
+                  ) : (
+                    <p style={{ color: 'var(--color-text)', fontSize: '14px', lineHeight: 1.65, margin: 0 }}>
+                      {aiExplanation}
+                    </p>
+                  )}
+                </div>
+              )}
+            </div>
+          ) : (
+            <div
+              style={{
+                background: 'var(--color-bg-card)',
+                border: '1px solid var(--color-border)',
+                borderRadius: '10px',
+                padding: '24px 16px',
+                textAlign: 'center',
+                color: 'var(--color-text-muted)',
+                fontSize: '14px',
+                lineHeight: 1.6,
+                flex: 1,
+              }}
+            >
+              Press <strong style={{ color: 'var(--color-gold)' }}>Next →</strong> to start learning {opening.name}.
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
