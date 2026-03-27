@@ -1,5 +1,6 @@
 import { Outlet, Link, useLocation, Navigate } from 'react-router-dom';
 import { useAuth, UserButton } from '@clerk/clerk-react';
+import { useProgress } from '../../hooks/useProgress';
 
 function LoadingScreen() {
   return (
@@ -12,14 +13,7 @@ function LoadingScreen() {
         background: 'var(--color-bg-dark)',
       }}
     >
-      <div
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          gap: '0.75rem',
-        }}
-      >
+      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.75rem' }}>
         <span style={{ fontSize: '2rem' }}>♟</span>
         <span style={{ color: 'var(--color-text-muted)', fontSize: '0.875rem' }}>Loading…</span>
       </div>
@@ -30,9 +24,10 @@ function LoadingScreen() {
 export function AppShell() {
   const location = useLocation();
   const { isLoaded, isSignedIn } = useAuth();
+  const { isLoading: isProgressLoading } = useProgress();
   const isBoard = /^\/(learn|quiz|drill)\//.test(location.pathname);
 
-  if (!isLoaded) return <LoadingScreen />;
+  if (!isLoaded || isProgressLoading) return <LoadingScreen />;
   if (!isSignedIn) return <Navigate to="/sign-in" replace />;
 
   return (
@@ -57,9 +52,7 @@ export function AppShell() {
             </Link>
             <UserButton
               appearance={{
-                elements: {
-                  avatarBox: { width: '2rem', height: '2rem' },
-                },
+                elements: { avatarBox: { width: '2rem', height: '2rem' } },
               }}
             />
           </nav>

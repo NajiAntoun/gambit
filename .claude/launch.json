@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "gambit-client",
+      "runtimeExecutable": "bash",
+      "runtimeArgs": ["-c", "source ~/.nvm/nvm.sh && cd /Users/naji/Documents/Projects/Gambit/client && npm run dev"],
+      "port": 5173
+    }
+  ]
+}

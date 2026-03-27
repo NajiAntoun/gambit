@@ -2,6 +2,8 @@ import express from 'express';
 import cors from 'cors';
 import { clerkMiddleware } from '@clerk/express';
 import { aiRouter } from './routes/ai';
+import { progressRouter } from './routes/progress';
+import { initDb } from './lib/db';
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -17,9 +19,6 @@ app.use(cors({
 }));
 
 app.use(express.json());
-
-// Clerk JWT verification — must come before protected routes.
-// Requires CLERK_SECRET_KEY env var.
 app.use(clerkMiddleware());
 
 app.get('/api/health', (_req, res) => {
@@ -27,7 +26,15 @@ app.get('/api/health', (_req, res) => {
 });
 
 app.use('/api', aiRouter);
+app.use('/api/progress', progressRouter);
 
-app.listen(PORT, () => {
-  console.log(`Gambit server running on port ${PORT}`);
-});
+initDb()
+  .then(() => {
+    app.listen(PORT, () => {
+      console.log(`Gambit server running on port ${PORT}`);
+    });
+  })
+  .catch((err) => {
+    console.error('Failed to initialise database:', err);
+    process.exit(1);
+  });
