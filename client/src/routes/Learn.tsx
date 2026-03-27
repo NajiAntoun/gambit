@@ -5,6 +5,7 @@ import { useOpeningPlayer } from '../hooks/useOpeningPlayer';
 import { useAskGambit } from '../hooks/useAskGambit';
 import { ChessBoard } from '../components/board/ChessBoard';
 import { Button } from '../components/shared/Button';
+import { ForkOverlay } from '../components/learn/ForkOverlay';
 
 export function Learn() {
   const { openingId } = useParams<{ openingId: string }>();
@@ -13,7 +14,7 @@ export function Learn() {
   const [showAiPanel, setShowAiPanel] = useState(false);
   const activeRef = useRef<HTMLButtonElement>(null);
 
-  const { moveIndex, fen, lastMove, currentMove, isAtStart, isAtEnd, next, prev, reset, goTo } =
+  const { moveIndex, fen, lastMove, currentMove, activeMoves, isAtStart, isAtEnd, pendingFork, next, prev, reset, goTo, chooseFork, dismissFork } =
     useOpeningPlayer(opening!);
 
   const { explanation: aiExplanation, loading: aiLoading, source: aiSource, ask, reset: resetAi } =
@@ -77,7 +78,7 @@ export function Learn() {
           <div style={{ fontSize: '11px', color: 'var(--color-text-muted)' }}>Learn Mode</div>
         </div>
         <div style={{ fontSize: '13px', color: 'var(--color-text-muted)', fontVariantNumeric: 'tabular-nums' }}>
-          {moveIndex + 1} / {opening.moves.length}
+          {moveIndex + 1} / {activeMoves.length}
         </div>
       </div>
 
@@ -122,9 +123,14 @@ export function Learn() {
             <Button variant="secondary" size="md" onClick={prev} disabled={isAtStart}>
               ← Prev
             </Button>
-            <Button variant={isAtEnd ? 'ghost' : 'primary'} size="md" onClick={next} disabled={isAtEnd}>
-              Next →
-            </Button>
+            {(() => {
+              const hasFork = opening.forks?.some(f => f.afterMoveIndex === moveIndex);
+              return (
+                <Button variant={isAtEnd ? 'ghost' : 'primary'} size="md" onClick={next} disabled={isAtEnd}>
+                  {hasFork ? '⑂ Choose line' : 'Next →'}
+                </Button>
+              );
+            })()}
           </div>
 
           {isAtEnd && (
@@ -163,7 +169,7 @@ export function Learn() {
             <div style={{ width: '100%', fontSize: '11px', fontWeight: 700, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--color-text-muted)', marginBottom: '6px' }}>
               Moves
             </div>
-            {opening.moves.map((move, i) => {
+            {activeMoves.map((move, i) => {
               const isUserMove = move.color === (opening.userColor === 'white' ? 'w' : 'b');
               const isActive = i === moveIndex;
               const moveNum = Math.floor(i / 2) + 1;
@@ -285,6 +291,15 @@ export function Learn() {
           )}
         </div>
       </div>
+
+      {/* Fork overlay — fires when the user presses Next at a branching point */}
+      {pendingFork && (
+        <ForkOverlay
+          fork={pendingFork}
+          onChoose={chooseFork}
+          onDismiss={dismissFork}
+        />
+      )}
     </div>
   );
 }

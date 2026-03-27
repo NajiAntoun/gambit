@@ -49,6 +49,24 @@ export function OpeningCard({ opening }: OpeningCardProps) {
       <div className="flex items-center gap-3">
         <DifficultyBadge difficulty={opening.difficulty} />
         <ProgressBadge status={progress.status} />
+        {opening.forks && opening.forks.length > 0 && (
+          <span
+            style={{
+              marginLeft: 'auto',
+              fontSize: '10px',
+              fontWeight: 700,
+              letterSpacing: '0.06em',
+              color: 'var(--color-gold)',
+              background: 'rgba(201,168,76,0.12)',
+              border: '1px solid rgba(201,168,76,0.25)',
+              borderRadius: '4px',
+              padding: '2px 6px',
+              whiteSpace: 'nowrap',
+            }}
+          >
+            ⑂ {opening.forks.reduce((n, f) => n + f.options.length, 0)} lines
+          </span>
+        )}
       </div>
     </button>
   );

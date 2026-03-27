@@ -51,6 +51,28 @@ export interface OpeningMove {
   explanation: string;
 }
 
+export interface ForkOption {
+  /** First move SAN of this line (e.g. "dxc4" or "e6") */
+  san: string;
+  /** Short label shown on the card (e.g. "Accepted" / "Declined") */
+  label: string;
+  /** Flavour badge (e.g. "Pawn grab!" / "Solid & classical") */
+  badge: string;
+  /** One-sentence strategic preview */
+  description: string;
+  /** Full continuation starting from this move */
+  moves: OpeningMove[];
+}
+
+export interface OpeningFork {
+  /** Index in opening.moves after which this fork occurs.
+   *  The fork overlay fires when the user would advance past this index. */
+  afterMoveIndex: number;
+  /** Heading shown in the overlay (e.g. "Accept or decline the gambit?") */
+  prompt: string;
+  options: ForkOption[];
+}
+
 export interface Opening {
   id: string;
   name: string;
@@ -62,6 +84,8 @@ export interface Opening {
   /** Brief description shown on the opening card */
   description: string;
   moves: OpeningMove[];
+  /** Optional branching points — accept/decline gambit decisions etc. */
+  forks?: OpeningFork[];
 }
 
 export interface OpeningProgress {
