@@ -1,0 +1,17 @@
+{
+  "name": "Gambit — Chess Opening Trainer",
+  "short_name": "Gambit",
+  "description": "Master your openings. Own the board.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0f1a0f",
+  "theme_color": "#1a2e1a",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

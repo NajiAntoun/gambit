@@ -1,5 +1,6 @@
 import React from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import './App.css';
 import { AppShell } from './components/layout/AppShell';
 import { ProgressContext, useProgressState } from './hooks/useProgress';
 import { Home } from './routes/Home';
