@@ -191,35 +191,82 @@ from both White and Black perspectives.
 - [x] M7.3 Visual progress indicators (badges, clean run counter, best time)
 - [x] M7.4 Commit: included in main commit
 
-### Milestone 8 — Polish & Deploy
+### Milestone 8 — Polish & Deploy ✅
 - [x] M8.1 Mobile responsiveness pass (mobile-first layout throughout)
 - [x] M8.2 Animation and UX polish (PWA manifest, App.css, viewport-fit)
-- [ ] M8.3 Deploy frontend → Vercel
-- [ ] M8.4 Deploy backend → Railway
-- [ ] M8.5 Connect frontend to backend (VITE_API_URL env var)
-- [ ] M8.6 End-to-end test on mobile and desktop
-- [ ] M8.7 Final commit: "v1.0 — shipped 🚀"
+- [x] M8.3 Deploy frontend → Vercel
+- [x] M8.4 Deploy backend → Railway (Express + PostgreSQL)
+- [x] M8.5 Connect frontend to backend (VITE_API_URL env var)
+- [x] M8.6 End-to-end test on mobile and desktop
+- [x] M8.7 Final commit: "v1.0 — shipped 🚀"
 
-### Milestone 9 — Drill Mode (If Time Permits)
-- [ ] M9.1 Drill mode UI
-- [ ] M9.2 Timer and streak counter
-- [ ] M9.3 Personal best persistence
-- [ ] M9.4 Commit: "Drill mode"
+### Milestone 9 — Drill Mode ✅
+- [x] M9.1 Drill mode UI (reuses quiz engine, no explanations)
+- [x] M9.2 Timer and streak counter
+- [x] M9.3 Personal best persistence
+- [x] M9.4 Commit: "Drill mode"
+
+### Milestone 10 — Authentication & Per-user Progress ✅
+- [x] M10.1 Clerk integration (sign-in / sign-up screens, ClerkProvider, UserButton)
+- [x] M10.2 Clerk theme matching Gambit dark aesthetic
+- [x] M10.3 Replace localStorage progress with server-side PostgreSQL
+- [x] M10.4 JWT-protected API endpoints (requireAuth middleware)
+- [x] M10.5 Per-user progress isolation (userId-scoped DB rows)
+- [x] M10.6 AppShell auth guard + loading screen
+- [x] M10.7 Commit: "Authentication + Postgres progress"
+
+### Milestone 11 — User Profiles & Onboarding ✅
+- [x] M11.1 accounts table (display name, birth year, country, chess level, preferred color, goal, gender)
+- [x] M11.2 Onboarding flow for new users (?welcome=true redirect)
+- [x] M11.3 Profile settings page with segmented controls and age inference
+- [x] M11.4 Skip flow (creates empty row so onboarding never repeats)
+- [x] M11.5 My Profile + Progress links in UserButton dropdown
+- [x] M11.6 Category labels renamed to beginner-friendly names
+- [x] M11.7 Commit: "User profiles + onboarding"
+
+### Milestone 12 — Online Presence Widget ✅
+- [x] M12.1 In-memory presence store with 90s TTL (no Redis needed)
+- [x] M12.2 Heartbeat (POST) + poll (GET) every 30s, sign-off on beforeunload
+- [x] M12.3 Pulsing green dot + count in header (CSS @keyframes)
+- [x] M12.4 Dropdown showing connected users: avatar, name, gender icon, country flag, level icon
+- [x] M12.5 Country name → ISO 3166 → flag emoji utility (countryFlags.ts)
+- [x] M12.6 Commit: "Online presence widget"
+
+### Milestone 13 — Chess Ratings & Platform Connections ✅
+- [x] M13.1 DB migrations: chess_title, fide_id, fide_rating, chess_com_*, lichess_* columns
+- [x] M13.2 Account route updated for all new fields (rowToAccount, POST, PATCH)
+- [x] M13.3 ChessTitle type; Account interface extended; OnlineUser.rating field added
+- [x] M13.4 fetchChessCom() + fetchLichess() — public APIs, CORS-safe, no key required
+- [x] M13.5 Profile page restructured: Personal info / Chess background / Official rating / Platform connections / Your account
+- [x] M13.6 PlatformConnector component: Fetch → preview card → Import flow
+- [x] M13.7 Background rating refresh on each login (silent, fire-and-forget)
+- [x] M13.8 Headline rating in heartbeat (FIDE → rapid → blitz fallback chain)
+- [x] M13.9 Online widget shows gold rating badge per user
+- [x] M13.10 Commit: "Chess ratings + platform connections"
 
 ---
 
 ## 7. Out of Scope (v1)
 - Multiplayer
 - Engine analysis
-- User accounts or cloud sync
 - Custom opening input by user
 - Opening explorer or database search
 - Endgame or middlegame training
-- Native mobile app (PWA is sufficient for v1)
+- Native mobile app (PWA is sufficient)
 
 ---
 
-## 8. Risks & Mitigation
+## 8. Backlog (post-v1)
+- Opening variation trees (forks, dangerous deviations, known traps)
+- Deviation Drill mode (quiz with unexpected opponent moves)
+- Expand opening library (more White openings, Gambit Accepted lines, more Black vs d4)
+- Animated Gambit app icon
+- Playful onboarding copy ("Skip for now" teaser)
+- FIDE API integration if it becomes reliably CORS-safe
+
+---
+
+## 9. Risks & Mitigation
 
 | Risk | Mitigation |
 |------|-----------|
@@ -231,10 +278,14 @@ from both White and Black perspectives.
 
 ---
 
-## 9. Definition of Done
-- [ ] App live and publicly accessible ✅
-- [ ] Learn and Quiz modes working end to end ✅
-- [ ] At least 5 openings playable ✅
-- [ ] Mobile responsive ✅
-- [ ] No console errors ✅
-- [ ] Progress saves and persists between sessions ✅
+## 10. Definition of Done ✅
+- [x] App live and publicly accessible
+- [x] Learn and Quiz modes working end to end
+- [x] At least 5 openings playable (14 implemented)
+- [x] Mobile responsive
+- [x] No console errors
+- [x] Progress saves and persists between sessions (PostgreSQL, per-user)
+- [x] Authentication with Clerk
+- [x] User profiles with chess context
+- [x] Online presence widget
+- [x] Chess ratings + platform connections
