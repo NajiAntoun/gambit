@@ -169,16 +169,16 @@ const genderOptions: SegOption<Gender>[] = [
   { value: 'prefer_not_to_say', label: '— Prefer not to say' },
 ];
 
-const chessTitleOptions: SegOption<ChessTitle>[] = [
-  { value: 'GM',  label: 'GM'  },
-  { value: 'IM',  label: 'IM'  },
-  { value: 'FM',  label: 'FM'  },
-  { value: 'CM',  label: 'CM'  },
-  { value: 'NM',  label: 'NM'  },
-  { value: 'WGM', label: 'WGM' },
-  { value: 'WIM', label: 'WIM' },
-  { value: 'WFM', label: 'WFM' },
-  { value: 'WCM', label: 'WCM' },
+const chessTitleMeta: { value: ChessTitle; long: string }[] = [
+  { value: 'GM',  long: 'GM — Grandmaster'           },
+  { value: 'IM',  long: 'IM — International Master'  },
+  { value: 'FM',  long: 'FM — FIDE Master'           },
+  { value: 'CM',  long: 'CM — Candidate Master'      },
+  { value: 'NM',  long: 'NM — National Master'       },
+  { value: 'WGM', long: 'WGM — Woman Grandmaster'    },
+  { value: 'WIM', long: 'WIM — Woman Intl. Master'   },
+  { value: 'WFM', long: 'WFM — Woman FIDE Master'    },
+  { value: 'WCM', long: 'WCM — Woman Candidate'      },
 ];
 
 // ─── Platform connector component ─────────────────────────────────────────────
@@ -620,7 +620,7 @@ export function Profile() {
               padding: '0.25rem 0',
             }}
           >
-            Skip for now →
+            Skip — I'll fill this in later
           </button>
         )}
       </div>
@@ -741,11 +741,26 @@ export function Profile() {
           <SectionHeading>Official rating</SectionHeading>
 
           <Field label="Chess title" hint="(if you hold one)">
-            <SegmentedControl
-              options={chessTitleOptions}
-              value={chessTitle}
-              onChange={setChessTitle}
-            />
+            <select
+              value={chessTitle ?? ''}
+              onChange={(e) => setChessTitle((e.target.value as ChessTitle) || null)}
+              style={{
+                ...inputStyle,
+                cursor: 'pointer',
+                appearance: 'none',
+                backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23888' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E")`,
+                backgroundRepeat: 'no-repeat',
+                backgroundPosition: 'right 0.875rem center',
+                paddingRight: '2.25rem',
+              }}
+            >
+              <option value="">None</option>
+              {chessTitleMeta.map((t) => (
+                <option key={t.value} value={t.value}>
+                  {t.long}
+                </option>
+              ))}
+            </select>
           </Field>
 
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
