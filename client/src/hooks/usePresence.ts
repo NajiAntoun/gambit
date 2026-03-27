@@ -65,9 +65,9 @@ export function usePresence() {
   // ─── Lifecycle ──────────────────────────────────────────────────────────────
 
   useEffect(() => {
-    // Immediate beat + poll on mount
-    void beat();
-    void poll();
+    // Beat first, then poll — avoids race condition where poll returns before
+    // the heartbeat has been stored, which would show count 0 on first render.
+    void beat().then(() => void poll());
 
     // Set up recurring intervals
     const beatId = setInterval(() => void beat(), HEARTBEAT_INTERVAL);
