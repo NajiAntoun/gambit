@@ -30,7 +30,7 @@ export interface Opening {
   id: string;
   name: string;
   eco: string;
-  category: 'White' | 'Black vs e4' | 'Black vs d4';
+  category: 'White Openings' | "Black vs King's Pawn (e4)" | "Black vs Queen's Pawn (d4)";
   /** Which color the user plays when studying this opening */
   userColor: Color;
   difficulty: Difficulty;

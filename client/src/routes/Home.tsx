@@ -3,7 +3,7 @@ import { openings, getOpeningsByCategory } from '../data/openings';
 import { OpeningCard } from '../components/home/OpeningCard';
 import type { Color } from '../data/types';
 
-const CATEGORIES = ['White', 'Black vs e4', 'Black vs d4'] as const;
+const CATEGORIES = ['White Openings', "Black vs King's Pawn (e4)", "Black vs Queen's Pawn (d4)"] as const;
 
 export function Home() {
   const [selectedColor, setSelectedColor] = useState<Color | 'all'>('all');

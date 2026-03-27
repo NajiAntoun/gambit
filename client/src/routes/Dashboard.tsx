@@ -4,7 +4,7 @@ import { useProgress } from '../hooks/useProgress';
 import { ProgressBadge } from '../components/home/ProgressBadge';
 import { DifficultyBadge } from '../components/home/DifficultyBadge';
 
-const CATEGORIES = ['White', 'Black vs e4', 'Black vs d4'] as const;
+const CATEGORIES = ['White Openings', "Black vs King's Pawn (e4)", "Black vs Queen's Pawn (d4)"] as const;
 
 export function Dashboard() {
   const navigate = useNavigate();
