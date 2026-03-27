@@ -24,4 +24,5 @@ app.use('/api', aiRouter);
 
 app.listen(PORT, () => {
   console.log(`Gambit server running on port ${PORT}`);
+  console.log(`ANTHROPIC_API_KEY set: ${!!process.env.ANTHROPIC_API_KEY}`);
 });
