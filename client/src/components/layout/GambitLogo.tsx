@@ -52,7 +52,7 @@ export function GambitLogo({ linkTo = '/' }: { linkTo?: string }) {
         }
         @keyframes gambit-crown-in {
           0%   { transform: translateX(-50%) translateY(-6px) scale(0.6); opacity: 0; }
-          100% { transform: translateX(-62%) translateY(0)    scale(1);   opacity: 1; }
+          100% { transform: translateX(-50%) translateY(0)    scale(1);   opacity: 1; }
         }
 
         .gambit-pawn {
@@ -74,11 +74,10 @@ export function GambitLogo({ linkTo = '/' }: { linkTo?: string }) {
         }
         .gambit-logo-crown {
           position: absolute;
-          top: -11px;
-          left: 50%;
-          transform: translateX(-62%);
-          display: block;
-          overflow: visible;
+          top: -0.6em;
+          left: 44%;
+          transform: translateX(-50%);
+          line-height: 1;
           animation: gambit-crown-in 0.35s ease-out 1.3s both;
         }
       `}</style>
@@ -154,18 +153,13 @@ export function GambitLogo({ linkTo = '/' }: { linkTo?: string }) {
         >
           <span style={{ position: 'relative', display: 'inline-block' }}>
             G
-            <svg
+            <span
               className="gambit-logo-crown"
-              viewBox="0 0 30 13"
-              width="22"
-              height="10"
+              style={{ fontSize: '0.75em', color: 'var(--color-gold)' }}
               aria-hidden
             >
-              <path d="M0,13 L0,7 L6,11 L10,2 L15,6.5 L20,2 L24,11 L30,7 L30,13 Z" fill="#c9a84c" />
-              <circle cx="10" cy="2"   r="1.8" fill="#e8c96a" />
-              <circle cx="15" cy="6.5" r="1.4" fill="#e8c96a" />
-              <circle cx="20" cy="2"   r="1.8" fill="#e8c96a" />
-            </svg>
+              ♛
+            </span>
           </span>
           ambit
         </span>
