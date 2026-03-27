@@ -1,8 +1,39 @@
-import { Outlet, Link, useLocation } from 'react-router-dom';
+import { Outlet, Link, useLocation, Navigate } from 'react-router-dom';
+import { useAuth, UserButton } from '@clerk/clerk-react';
+
+function LoadingScreen() {
+  return (
+    <div
+      style={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        minHeight: '100svh',
+        background: 'var(--color-bg-dark)',
+      }}
+    >
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          gap: '0.75rem',
+        }}
+      >
+        <span style={{ fontSize: '2rem' }}>♟</span>
+        <span style={{ color: 'var(--color-text-muted)', fontSize: '0.875rem' }}>Loading…</span>
+      </div>
+    </div>
+  );
+}
 
 export function AppShell() {
   const location = useLocation();
+  const { isLoaded, isSignedIn } = useAuth();
   const isBoard = /^\/(learn|quiz|drill)\//.test(location.pathname);
+
+  if (!isLoaded) return <LoadingScreen />;
+  if (!isSignedIn) return <Navigate to="/sign-in" replace />;
 
   return (
     <div className="flex flex-col min-h-svh" style={{ background: 'var(--color-bg-dark)' }}>
@@ -24,6 +55,13 @@ export function AppShell() {
             >
               Progress
             </Link>
+            <UserButton
+              appearance={{
+                elements: {
+                  avatarBox: { width: '2rem', height: '2rem' },
+                },
+              }}
+            />
           </nav>
         </header>
       )}

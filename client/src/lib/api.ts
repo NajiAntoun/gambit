@@ -14,10 +14,16 @@ interface AskGambitResponse {
   source: 'ai' | 'fallback';
 }
 
-export async function askGambit(req: AskGambitRequest): Promise<AskGambitResponse> {
+export async function askGambit(
+  req: AskGambitRequest,
+  token: string,
+): Promise<AskGambitResponse> {
   const res = await fetch(`${API_URL}/api/ask-gambit`, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
     body: JSON.stringify(req),
   });
   if (!res.ok) throw new Error(`API error: ${res.status}`);

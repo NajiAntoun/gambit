@@ -1,5 +1,6 @@
 import { Router, Request, Response } from 'express';
 import rateLimit from 'express-rate-limit';
+import { requireAuth } from '@clerk/express';
 import { askGambit } from '../lib/claude';
 import { FALLBACK_MESSAGE, FALLBACK_WRONG_MOVE_MESSAGE } from '../lib/fallbacks';
 
@@ -12,7 +13,8 @@ const limiter = rateLimit({
   legacyHeaders: false,
 });
 
-aiRouter.post('/ask-gambit', limiter, async (req: Request, res: Response) => {
+// requireAuth() returns 401 if no valid Clerk JWT is present.
+aiRouter.post('/ask-gambit', requireAuth(), limiter, async (req: Request, res: Response) => {
   const { fen, opening, move, moveNumber, context, explanation } = req.body;
 
   if (!fen || !opening || !move || !moveNumber || !context) {

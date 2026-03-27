@@ -11,21 +11,24 @@ interface ProgressContextValue {
 
 export const ProgressContext = createContext<ProgressContextValue | null>(null);
 
-export function useProgressState(): ProgressContextValue {
+export function useProgressState(userId: string): ProgressContextValue {
   const [, forceUpdate] = useState(0);
 
-  const getProgress = useCallback((openingId: string): OpeningProgress => {
-    const stored = loadProgress();
-    return stored.openings[openingId] ?? {
-      status: 'not-started',
-      cleanRuns: 0,
-      quizAttempts: 0,
-      bestTime: null,
-      drillBestTime: null,
-      drillBestStreak: 0,
-      lastAttempted: null,
-    };
-  }, []);
+  const getProgress = useCallback(
+    (openingId: string): OpeningProgress => {
+      const stored = loadProgress(userId);
+      return stored.openings[openingId] ?? {
+        status: 'not-started',
+        cleanRuns: 0,
+        quizAttempts: 0,
+        bestTime: null,
+        drillBestTime: null,
+        drillBestStreak: 0,
+        lastAttempted: null,
+      };
+    },
+    [userId],
+  );
 
   const recordQuizResult = useCallback(
     (openingId: string, perfect: boolean, timeMs: number) => {
@@ -37,18 +40,22 @@ export function useProgressState(): ProgressContextValue {
           : current.status === 'not-started'
           ? 'learning'
           : current.status;
-      updateOpeningProgress(openingId, {
-        status: newStatus,
-        cleanRuns: newStatus === 'mastered' ? current.cleanRuns : newCleanRuns,
-        quizAttempts: current.quizAttempts + 1,
-        bestTime:
-          perfect && (current.bestTime === null || timeMs < current.bestTime)
-            ? timeMs
-            : current.bestTime,
-      });
+      updateOpeningProgress(
+        openingId,
+        {
+          status: newStatus,
+          cleanRuns: newStatus === 'mastered' ? current.cleanRuns : newCleanRuns,
+          quizAttempts: current.quizAttempts + 1,
+          bestTime:
+            perfect && (current.bestTime === null || timeMs < current.bestTime)
+              ? timeMs
+              : current.bestTime,
+        },
+        userId,
+      );
       forceUpdate((n) => n + 1);
     },
-    [getProgress]
+    [getProgress, userId],
   );
 
   const refresh = useCallback(() => forceUpdate((n) => n + 1), []);
