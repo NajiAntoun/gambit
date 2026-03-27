@@ -1,7 +1,8 @@
-import { Outlet, Link, useLocation, Navigate } from 'react-router-dom';
+import { Outlet, Link, useLocation, Navigate, useNavigate } from 'react-router-dom';
 import { useAuth, UserButton } from '@clerk/clerk-react';
 import { useProgress } from '../../hooks/useProgress';
 import { useAccount } from '../../hooks/useAccount';
+import { OnlineWidget } from './OnlineWidget';
 
 function LoadingScreen() {
   return (
@@ -23,19 +24,15 @@ function LoadingScreen() {
 }
 
 export function AppShell() {
-  const location = useLocation();
+  const location  = useLocation();
+  const navigate  = useNavigate();
   const { isLoaded, isSignedIn } = useAuth();
   const { isLoading: isProgressLoading } = useProgress();
   const { isLoading: isAccountLoading, isNewUser } = useAccount();
   const isBoard = /^\/(learn|quiz|drill)\//.test(location.pathname);
 
-  // Wait for Clerk + both data fetches before rendering anything
   if (!isLoaded || isProgressLoading || isAccountLoading) return <LoadingScreen />;
-
-  // Auth guard
   if (!isSignedIn) return <Navigate to="/sign-in" replace />;
-
-  // Onboarding — redirect new users to profile setup (skippable from there)
   if (isNewUser && location.pathname !== '/profile') {
     return <Navigate to="/profile?welcome=true" replace />;
   }
@@ -52,7 +49,11 @@ export function AppShell() {
               ♟ Gambit
             </span>
           </Link>
-          <nav className="flex items-center gap-4">
+
+          <nav className="flex items-center gap-3">
+            {/* Online presence widget */}
+            <OnlineWidget />
+
             <Link
               to="/dashboard"
               className="text-sm font-medium transition-colors"
@@ -60,18 +61,22 @@ export function AppShell() {
             >
               Progress
             </Link>
-            <Link
-              to="/profile"
-              className="text-sm font-medium transition-colors"
-              style={{ color: 'var(--color-text-muted)' }}
-            >
-              Profile
-            </Link>
-            <UserButton
-              appearance={{
-                elements: { avatarBox: { width: '2rem', height: '2rem' } },
-              }}
-            />
+
+            {/* Clerk UserButton with custom menu items */}
+            <UserButton>
+              <UserButton.MenuItems>
+                <UserButton.Action
+                  label="My Profile"
+                  labelIcon={<span style={{ fontSize: '14px' }}>♟</span>}
+                  onClick={() => navigate('/profile')}
+                />
+                <UserButton.Action
+                  label="Progress"
+                  labelIcon={<span style={{ fontSize: '14px' }}>📊</span>}
+                  onClick={() => navigate('/dashboard')}
+                />
+              </UserButton.MenuItems>
+            </UserButton>
           </nav>
         </header>
       )}

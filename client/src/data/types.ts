@@ -2,6 +2,7 @@ export type Color = 'white' | 'black';
 export type ChessLevel = 'beginner' | 'intermediate' | 'advanced';
 export type PreferredColor = 'white' | 'black' | 'both';
 export type Goal = 'casual' | 'tournament' | 'rating';
+export type Gender = 'male' | 'female' | 'nonbinary' | 'prefer_not_to_say';
 
 export interface Account {
   displayName:    string | null;
@@ -10,6 +11,14 @@ export interface Account {
   goal:           Goal | null;
   birthYear:      number | null;
   country:        string | null;
+  gender:         Gender | null;
+}
+
+export interface OnlineUser {
+  displayName: string | null;
+  country:     string | null;
+  gender:      string | null;
+  chessLevel:  string | null;
 }
 export type Difficulty = 'beginner' | 'intermediate' | 'advanced';
 export type ProgressStatus = 'not-started' | 'learning' | 'mastered';

@@ -22,3 +22,12 @@ input:focus {
 .no-select {
   user-select: none;
 }
+
+/* Online presence pulsing dot */
+@keyframes presence-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(76, 175, 125, 0.6); }
+  50%       { box-shadow: 0 0 0 5px rgba(76, 175, 125, 0); }
+}
+.presence-dot {
+  animation: presence-pulse 2.5s ease-in-out infinite;
+}

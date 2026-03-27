@@ -15,6 +15,7 @@ function rowToAccount(row: Record<string, unknown>) {
     goal:           row.goal            as string | null,
     birthYear:      row.birth_year      as number | null,
     country:        row.country         as string | null,
+    gender:         row.gender          as string | null,
   };
 }
 
@@ -39,23 +40,25 @@ accountRouter.get('/', requireAuth(), async (req: Request, res: Response) => {
 
 accountRouter.post('/', requireAuth(), async (req: Request, res: Response) => {
   const { userId } = getAuth(req);
-  const { displayName, chessLevel, preferredColor, goal, birthYear, country } = req.body;
+  const { displayName, chessLevel, preferredColor, goal, birthYear, country, gender } = req.body;
 
   // Validate enum fields when provided
   const validChessLevels   = ['beginner', 'intermediate', 'advanced'];
   const validColors        = ['white', 'black', 'both'];
   const validGoals         = ['casual', 'tournament', 'rating'];
+  const validGenders       = ['male', 'female', 'nonbinary', 'prefer_not_to_say'];
 
   if (chessLevel     && !validChessLevels.includes(chessLevel))   { res.status(400).json({ error: 'Invalid chess_level' });      return; }
   if (preferredColor && !validColors.includes(preferredColor))     { res.status(400).json({ error: 'Invalid preferred_color' }); return; }
   if (goal           && !validGoals.includes(goal))                { res.status(400).json({ error: 'Invalid goal' });             return; }
+  if (gender         && !validGenders.includes(gender))            { res.status(400).json({ error: 'Invalid gender' });          return; }
   if (birthYear      && (birthYear < 1900 || birthYear > 2100))   { res.status(400).json({ error: 'Invalid birth_year' });       return; }
 
   try {
     const result = await pool.query(
       `INSERT INTO accounts
-         (user_id, display_name, chess_level, preferred_color, goal, birth_year, country)
-       VALUES ($1, $2, $3, $4, $5, $6, $7)
+         (user_id, display_name, chess_level, preferred_color, goal, birth_year, country, gender)
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
        ON CONFLICT (user_id) DO UPDATE SET
          display_name    = COALESCE($2, accounts.display_name),
          chess_level     = COALESCE($3, accounts.chess_level),
@@ -63,6 +66,7 @@ accountRouter.post('/', requireAuth(), async (req: Request, res: Response) => {
          goal            = COALESCE($5, accounts.goal),
          birth_year      = COALESCE($6, accounts.birth_year),
          country         = COALESCE($7, accounts.country),
+         gender          = COALESCE($8, accounts.gender),
          updated_at      = NOW()
        RETURNING *`,
       [
@@ -73,6 +77,7 @@ accountRouter.post('/', requireAuth(), async (req: Request, res: Response) => {
         goal           ?? null,
         birthYear      ?? null,
         country        ?? null,
+        gender         ?? null,
       ],
     );
     res.json({ account: rowToAccount(result.rows[0]) });
@@ -100,6 +105,7 @@ accountRouter.patch('/', requireAuth(), async (req: Request, res: Response) => {
     goal:           'goal',
     birthYear:      'birth_year',
     country:        'country',
+    gender:         'gender',
   };
 
   for (const [key, col] of Object.entries(allowed)) {

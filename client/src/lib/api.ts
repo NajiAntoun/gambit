@@ -1,5 +1,5 @@
 import { API_URL } from './constants';
-import type { OpeningProgress, Account } from '../data/types';
+import type { OpeningProgress, Account, OnlineUser } from '../data/types';
 
 // ─── AI ──────────────────────────────────────────────────────────────────────
 
@@ -106,4 +106,34 @@ export async function patchAccount(
   if (!res.ok) throw new Error(`API error: ${res.status}`);
   const data = await res.json() as { account: Account };
   return data.account;
+}
+
+// ─── Presence ─────────────────────────────────────────────────────────────────
+
+export async function sendHeartbeat(
+  user: Pick<OnlineUser, 'displayName' | 'country' | 'gender' | 'chessLevel'>,
+  token: string,
+): Promise<void> {
+  await fetch(`${API_URL}/api/presence`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+    body: JSON.stringify(user),
+  });
+}
+
+export async function fetchOnlineUsers(
+  token: string,
+): Promise<{ count: number; users: OnlineUser[] }> {
+  const res = await fetch(`${API_URL}/api/presence`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  if (!res.ok) throw new Error(`API error: ${res.status}`);
+  return res.json() as Promise<{ count: number; users: OnlineUser[] }>;
+}
+
+export async function sendSignOff(token: string): Promise<void> {
+  await fetch(`${API_URL}/api/presence`, {
+    method: 'DELETE',
+    headers: { Authorization: `Bearer ${token}` },
+  });
 }

@@ -27,8 +27,16 @@ export async function initDb(): Promise<void> {
       goal            TEXT CHECK (goal IN ('casual', 'tournament', 'rating')),
       birth_year      SMALLINT CHECK (birth_year >= 1900 AND birth_year <= 2100),
       country         TEXT,
+      gender          TEXT CHECK (gender IN ('male', 'female', 'nonbinary', 'prefer_not_to_say')),
       created_at      TIMESTAMPTZ NOT NULL DEFAULT NOW(),
       updated_at      TIMESTAMPTZ NOT NULL DEFAULT NOW()
     )
+  `);
+
+  // Idempotent migration — adds gender column to existing tables
+  await pool.query(`
+    ALTER TABLE accounts
+    ADD COLUMN IF NOT EXISTS gender TEXT
+      CHECK (gender IN ('male', 'female', 'nonbinary', 'prefer_not_to_say'))
   `);
 }

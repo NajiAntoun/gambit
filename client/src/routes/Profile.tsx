@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useSearchParams, Link } from 'react-router-dom';
 import { useAccount } from '../hooks/useAccount';
-import type { ChessLevel, PreferredColor, Goal } from '../data/types';
+import type { ChessLevel, PreferredColor, Goal, Gender } from '../data/types';
 
 // ─── Segmented control ────────────────────────────────────────────────────────
 
@@ -114,6 +114,13 @@ const goalOptions: SegOption<Goal>[] = [
   { value: 'rating',      label: '📈 Improve rating'    },
 ];
 
+const genderOptions: SegOption<Gender>[] = [
+  { value: 'male',              label: '♂ Male'              },
+  { value: 'female',            label: '♀ Female'            },
+  { value: 'nonbinary',         label: '⚧ Non-binary'        },
+  { value: 'prefer_not_to_say', label: '— Prefer not to say' },
+];
+
 // ─── Profile page ─────────────────────────────────────────────────────────────
 
 export function Profile() {
@@ -128,6 +135,7 @@ export function Profile() {
   const [chessLevel,     setChessLevel]     = useState<ChessLevel | null>(null);
   const [preferredColor, setPreferredColor] = useState<PreferredColor | null>(null);
   const [goal,           setGoal]           = useState<Goal | null>(null);
+  const [gender,         setGender]         = useState<Gender | null>(null);
   const [saving,         setSaving]         = useState(false);
   const [saved,          setSaved]          = useState(false);
 
@@ -140,6 +148,7 @@ export function Profile() {
     setChessLevel( account.chessLevel     ?? null);
     setPreferredColor(account.preferredColor ?? null);
     setGoal(       account.goal           ?? null);
+    setGender(     account.gender         ?? null);
   }, [account]);
 
   async function handleSubmit(e: React.FormEvent) {
@@ -153,6 +162,7 @@ export function Profile() {
         chessLevel,
         preferredColor,
         goal,
+        gender,
       });
       if (isOnboarding) {
         navigate('/', { replace: true });
@@ -316,6 +326,15 @@ export function Profile() {
               placeholder="e.g. France"
               maxLength={64}
               style={inputStyle}
+            />
+          </Field>
+
+          {/* Gender */}
+          <Field label="Gender">
+            <SegmentedControl
+              options={genderOptions}
+              value={gender}
+              onChange={setGender}
             />
           </Field>
 
