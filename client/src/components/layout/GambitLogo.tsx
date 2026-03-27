@@ -67,10 +67,10 @@ export function GambitLogo({ linkTo = '/' }: { linkTo?: string }) {
           userSelect: 'none',
         }}
       >
-        {/* King topples — visible gold, not grayed out */}
+        {/* King topples */}
         <span
           className="gambit-logo-king"
-          style={{ fontSize: '1.9rem', lineHeight: 1, color: 'rgba(201,168,76,0.75)' }}
+          style={{ fontSize: '2.6rem', lineHeight: 1, color: 'rgba(201,168,76,0.75)' }}
           aria-hidden
         >
           ♚
@@ -79,7 +79,7 @@ export function GambitLogo({ linkTo = '/' }: { linkTo?: string }) {
         {/* Our pawn crushes it */}
         <span
           className="gambit-logo-pawn"
-          style={{ fontSize: '2.1rem', lineHeight: 1, color: 'var(--color-gold)', marginLeft: '-0.85rem' }}
+          style={{ fontSize: '2.9rem', lineHeight: 1, color: 'var(--color-gold)', marginLeft: '-1.1rem' }}
           aria-hidden
         >
           ♟
@@ -89,26 +89,26 @@ export function GambitLogo({ linkTo = '/' }: { linkTo?: string }) {
         <span
           className="gambit-logo-text"
           style={{
-            fontSize: '1.35rem',
+            fontSize: '1.75rem',
             fontWeight: 700,
             letterSpacing: '0.04em',
             color: 'var(--color-gold)',
-            marginLeft: '0.25rem',
+            marginLeft: '0.3rem',
             display: 'flex',
             alignItems: 'flex-start',
           }}
         >
-          {/* G with a small crown perched above it */}
+          {/* G with crown perched above */}
           <span style={{ position: 'relative', display: 'inline-block' }}>
             G
             <span
               className="gambit-logo-crown"
               style={{
                 position: 'absolute',
-                top: '-0.55em',
+                top: '-0.6em',
                 left: '50%',
                 transform: 'translateX(-50%)',
-                fontSize: '0.5em',
+                fontSize: '0.7em',
                 lineHeight: 1,
                 color: 'var(--color-gold)',
               }}
