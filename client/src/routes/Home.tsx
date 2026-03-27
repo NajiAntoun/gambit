@@ -44,13 +44,13 @@ export function Home() {
       </div>
 
       {/* Color filter */}
-      <div className="flex gap-2 mb-4 flex-wrap">
+      <div style={{ display: 'flex', justifyContent: 'center', gap: '8px', marginBottom: '16px', flexWrap: 'wrap' }}>
         {(['all', 'white', 'black'] as const).map((c) => (
           <button
             key={c}
             onClick={() => setSelectedColor(c)}
             style={{
-              padding: '8px 16px',
+              padding: '8px 18px',
               borderRadius: '8px',
               fontWeight: 600,
               fontSize: '13px',
@@ -60,9 +60,14 @@ export function Home() {
               background: selectedColor === c ? 'var(--color-gold)' : 'var(--color-bg-card)',
               color: selectedColor === c ? '#0f1a0f' : 'var(--color-text)',
               border: selectedColor === c ? 'none' : '1px solid var(--color-border)',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '6px',
             }}
           >
-            {c === 'all' ? 'All Openings' : c === 'white' ? '♙ Playing White' : '♟ Playing Black'}
+            {c === 'white' && <span style={{ fontSize: '18px', lineHeight: 1 }}>♙</span>}
+            {c === 'black' && <span style={{ fontSize: '18px', lineHeight: 1 }}>♟</span>}
+            {c === 'all' ? 'All Openings' : c === 'white' ? 'Playing White' : 'Playing Black'}
           </button>
         ))}
       </div>
