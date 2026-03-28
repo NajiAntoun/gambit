@@ -129,6 +129,25 @@ export const deviationsByOpening: Record<string, Deviation[]> = {
     },
   ],
 
+  'birds-opening': [
+    {
+      atMoveIndex: 1, // Book: 1...d5. Deviation: 1...e5 (From's Gambit)
+      move: 'e5',
+      label: "From's Gambit",
+      deviationExplanation: "Black counter-gambits with e5! This is From's Gambit — Black sacrifices a pawn to open lines and create attacking chances against White's weakened kingside.",
+      correctResponse: 'fxe5',
+      responseExplanation: "Accept the pawn with fxe5! White is up a pawn and the e5 pawn controls important central squares. Don't be afraid — Black's compensation is manageable if you develop quickly.",
+    },
+    {
+      atMoveIndex: 5, // Book: 3...Nf6. Deviation: 3...Bf5 (develops bishop first)
+      move: 'Bf5',
+      label: 'Early Bf5',
+      deviationExplanation: 'Black develops the bishop to f5 instead of the knight, putting pressure on d3 and trying to hold the e4 pawn more firmly.',
+      correctResponse: 'd3',
+      responseExplanation: 'Push d3 anyway! Challenge the e4 pawn directly. After exd3 Bxd3 Bxd3 Qxd3, White has open lines and active pieces. The gambit plan continues regardless.',
+    },
+  ],
+
   'kings-indian-attack': [
     {
       atMoveIndex: 1, // Book: 1...d5. Deviation: 1...d6 (passive, Pirc-like)
