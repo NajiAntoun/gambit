@@ -432,4 +432,23 @@ export const deviationsByOpening: Record<string, Deviation[]> = {
       responseExplanation: 'Play e6! Black will recapture the c5 pawn easily and develop the bishop to reclaim the pawn. White has given up the center for nothing.',
     },
   ],
+
+  'scholars-mate-defense': [
+    {
+      atMoveIndex: 2, // Book: 2.Qh5 Nc6. Deviation: Qh5 but Black blunders g6
+      move: 'Qh5',
+      label: 'Early g6 blunder?',
+      deviationExplanation: 'White plays Qh5 threatening both e5 and f7. If you play g6 now (before defending e5), White wins material with Qxe5+ forking king and rook.',
+      correctResponse: 'Nc6',
+      responseExplanation: 'Nc6 is the only correct defense! It develops a piece AND defends the e5 pawn. Only after Nc6 is g6 safe.',
+    },
+    {
+      atMoveIndex: 8, // Book: 5.Qb3. Deviation: White plays d3 (slow)
+      move: 'd3',
+      label: 'Passive d3?!',
+      deviationExplanation: 'White plays d3 instead of the more aggressive Qb3 or g4. This is too slow and gives Black a strong counter-attack immediately.',
+      correctResponse: 'Nd4',
+      responseExplanation: 'Nd4! The knight leaps into the center with devastating effect — it threatens the queen on f3 and the Nxc2+ fork on king and rook. White is already in trouble.',
+    },
+  ],
 };

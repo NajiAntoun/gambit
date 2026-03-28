@@ -5,6 +5,8 @@ import { useAccount } from '../hooks/useAccount';
 import { fetchChessCom, fetchLichess } from '../lib/api';
 import { GambitLogo } from '../components/layout/GambitLogo';
 import type { ChessLevel, PreferredColor, Goal, Gender, ChessTitle } from '../data/types';
+import { usePieceTheme, PIECE_THEMES } from '../hooks/usePieceTheme';
+import type { PieceTheme } from '../hooks/usePieceTheme';
 
 // ─── Segmented control ────────────────────────────────────────────────────────
 
@@ -469,6 +471,7 @@ export function Profile() {
   const [saving,  setSaving]  = useState(false);
   const [saved,   setSaved]   = useState(false);
   const [copied,  setCopied]  = useState(false);
+  const { theme: pieceTheme, setTheme: setPieceTheme } = usePieceTheme();
 
   // Pre-fill from existing account data
   useEffect(() => {
@@ -815,6 +818,53 @@ export function Profile() {
             savedRatings={{ rapid: lichessRapid, blitz: lichessBlitz, bullet: lichessBullet }}
             onImport={handleLichessImport}
           />
+
+          {/* ── Piece style ──────────────────────────────────────── */}
+          <SectionHeading>Piece style</SectionHeading>
+
+          <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
+            {PIECE_THEMES.map((t) => {
+              const selected = t.id === pieceTheme;
+              return (
+                <button
+                  key={t.id}
+                  type="button"
+                  onClick={() => setPieceTheme(t.id)}
+                  style={{
+                    flex: '1 1 calc(50% - 0.25rem)',
+                    minWidth: '140px',
+                    padding: '0.75rem',
+                    borderRadius: '8px',
+                    border: selected
+                      ? '2px solid var(--color-gold)'
+                      : '2px solid rgba(201,168,76,0.15)',
+                    background: selected ? 'rgba(201,168,76,0.1)' : 'transparent',
+                    cursor: 'pointer',
+                    transition: 'all 0.15s',
+                    textAlign: 'center',
+                  }}
+                >
+                  {/* Mini preview: 3 pieces */}
+                  <div style={{ display: 'flex', justifyContent: 'center', gap: '2px', marginBottom: '6px' }}>
+                    {['wN', 'bQ', 'wK'].map((p) => (
+                      <img
+                        key={p}
+                        src={`/pieces/${t.id}/${p}.svg`}
+                        alt={p}
+                        style={{ width: '28px', height: '28px' }}
+                      />
+                    ))}
+                  </div>
+                  <div style={{ fontSize: '0.8rem', fontWeight: selected ? 700 : 500, color: selected ? 'var(--color-gold)' : 'var(--color-text)' }}>
+                    {t.label}
+                  </div>
+                  <div style={{ fontSize: '0.65rem', color: 'var(--color-text-muted)', marginTop: '2px' }}>
+                    {t.description}
+                  </div>
+                </button>
+              );
+            })}
+          </div>
 
           {/* ── Submit ────────────────────────────────────────────── */}
           <button

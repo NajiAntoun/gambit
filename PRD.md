@@ -19,13 +19,13 @@ that demonstrates Learn and Quiz modes across multiple openings
 from both White and Black perspectives.
 
 ### Success Criteria
-- [ ] App is live and publicly accessible by end of day
-- [ ] User can select an opening and a color
-- [ ] Learn mode works flawlessly with move-by-move navigation
-- [ ] Quiz mode correctly validates user moves and gives feedback
-- [ ] At least 5 openings fully implemented
-- [ ] Works on mobile and desktop
-- [ ] Drill mode implemented if time permits
+- [x] App is live and publicly accessible by end of day
+- [x] User can select an opening and a color
+- [x] Learn mode works flawlessly with move-by-move navigation
+- [x] Quiz mode correctly validates user moves and gives feedback
+- [x] At least 5 openings fully implemented (28 shipped)
+- [x] Works on mobile and desktop
+- [x] Drill mode implemented (+ deviation drills)
 
 ---
 
@@ -58,15 +58,20 @@ from both White and Black perspectives.
 
 ### 4.1 Opening Selection Screen
 - Color picker: White or Black
-- Opening list grouped by category:
-  - **White:** Ruy Lopez, Italian Game, Queen's Gambit, 
-    London System, King's Indian Attack
-  - **Black vs e4:** Sicilian Defense (Najdorf, Dragon, Scheveningen), 
-    French Defense, Caro-Kann
-  - **Black vs d4:** King's Indian Defense, Nimzo-Indian, 
-    Queen's Gambit Declined
-- Each opening shows: name, difficulty badge, progress status
+- Opening list grouped by category (28 openings):
+  - **White (10):** Ruy Lopez, Italian Game, Queen's Gambit,
+    London System, King's Indian Attack, Scotch Game, Vienna Game,
+    English Opening, Réti Opening, Bird's Opening (Williams Gambit)
+  - **Black vs e4 (11):** Sicilian Najdorf, Sicilian Dragon,
+    French Defense, Caro-Kann, Petroff Defense, Scandinavian Defense,
+    Pirc Defense, Alekhine's Defense, King's Gambit (Falkbeer Counter),
+    Sicilian Scheveningen, Scholar's Mate Defense
+  - **Black vs d4 (7):** King's Indian Defense, Nimzo-Indian,
+    Queen's Gambit Declined, Grünfeld Defense, Slav Defense,
+    Queen's Indian Defense, Modern Benoni
+- Each opening shows: name, difficulty badge, progress status, mini board preview
 - Search and filter by name
+- Opening variation forks (accept/decline gambit decisions) in 9 openings
 
 ### 4.2 Learn Mode ✅ MUST SHIP
 - Visual chess board with beautiful pieces
@@ -90,11 +95,11 @@ from both White and Black perspectives.
 - Progress updated on completion 
   (Learning → Mastered after 3 clean runs)
 
-### 4.4 Drill Mode ⏱ IF TIME PERMITS
-- No explanations — pure move speed
-- Countdown timer per opening
-- Streak counter
-- Personal best tracking
+### 4.4 Drill Mode ✅ SHIPPED
+- Speed drill: pure move speed, timer, streak counter, personal best tracking
+- Deviation drill: opponent deviates from book line, user finds the correct punishment
+- Educational feedback: explains why the deviation is bad and why the response works
+- 42 deviation scenarios across all 28 openings
 
 ### 4.5 Progress Dashboard
 - Overview of all openings and their status
@@ -147,7 +152,7 @@ from both White and Black perspectives.
 - [x] M1.6 First commit: "Project scaffold"
 
 ### Milestone 2 — Data & Board ✅
-- [x] M2.1 Create opening data file (14 openings, 170+ annotated moves, structured TS arrays)
+- [x] M2.1 Create opening data file (28 openings, 400+ annotated moves, structured TS arrays)
 - [x] M2.2 Build chess board component (react-chessboard v9 wrapper)
 - [x] M2.3 Board flips correctly based on chosen color
 - [x] M2.4 Move highlighting works correctly (last move in gold)
@@ -200,11 +205,15 @@ from both White and Black perspectives.
 - [x] M8.6 End-to-end test on mobile and desktop
 - [x] M8.7 Final commit: "v1.0 — shipped 🚀"
 
-### Milestone 9 — Drill Mode ✅
+### Milestone 9 — Drill Mode & Deviation Drills ✅
 - [x] M9.1 Drill mode UI (reuses quiz engine, no explanations)
 - [x] M9.2 Timer and streak counter
 - [x] M9.3 Personal best persistence
-- [x] M9.4 Commit: "Drill mode"
+- [x] M9.4 Deviation Drill mode — opponent deviates from book, user finds the punishment
+- [x] M9.5 Deviation engine (useDrillEngine): auto-play to deviation point, validate response, educational feedback
+- [x] M9.6 42 deviation scenarios across all 28 openings (separate deviations.ts data file)
+- [x] M9.7 ErrorBoundary + MiniBoard resilience (try/catch on chess.js errors)
+- [x] M9.8 Commit: "Drill mode + deviation drills"
 
 ### Milestone 10 — Authentication & Per-user Progress ✅
 - [x] M10.1 Clerk integration (sign-in / sign-up screens, ClerkProvider, UserButton)
@@ -258,11 +267,15 @@ from both White and Black perspectives.
 
 ## 8. Backlog (post-v1)
 - ~~Opening variation trees (forks, dangerous deviations, known traps)~~ ✅ Done — 9 openings with accept/decline forks, ForkOverlay component
-- Deviation Drill mode (quiz with unexpected opponent moves)
-- ~~Expand opening library (more White openings, Gambit Accepted lines, more Black vs d4)~~ ✅ Done — 23 openings across all categories
-- Animated Gambit app icon
+- ~~Deviation Drill mode (quiz with unexpected opponent moves)~~ ✅ Done — 42 deviation scenarios across 28 openings, useDrillEngine state machine, educational feedback
+- ~~Expand opening library (more White openings, Gambit Accepted lines, more Black vs d4)~~ ✅ Done — 28 openings across all categories (including Bird's Williams Gambit, Scholar's Mate Defense)
+- ~~Animated Gambit app icon~~ ✅ Done — redesigned logo: floating knight badge with gold gradient, crowned G wordmark, gold accent underline, matching favicon
 - ~~Playful onboarding copy ("Skip for now" teaser)~~ ✅ Done
+- ~~Piece theme selector~~ ✅ Done — 4 piece sets (Spatial, Staunty, Maestro, Governor), user preference persisted in localStorage, selector in Profile page
+- ~~Compact header on board pages~~ ✅ Done — online widget + profile accessible from all pages
 - FIDE API integration if it becomes reliably CORS-safe
+- 🌐 Internationalization (i18n) — French/English language switcher, then more languages. UI strings first, then batch-translate move explanations via Claude API. Low priority.
+- Sync piece theme preference to server (currently localStorage only)
 
 ---
 
@@ -281,7 +294,7 @@ from both White and Black perspectives.
 ## 10. Definition of Done ✅
 - [x] App live and publicly accessible
 - [x] Learn and Quiz modes working end to end
-- [x] At least 5 openings playable (14 implemented)
+- [x] At least 5 openings playable (28 implemented)
 - [x] Mobile responsive
 - [x] No console errors
 - [x] Progress saves and persists between sessions (PostgreSQL, per-user)

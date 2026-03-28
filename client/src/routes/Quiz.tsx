@@ -171,7 +171,7 @@ export function Quiz() {
   };
 
   return (
-    <div style={{ height: '100svh', display: 'flex', flexDirection: 'column', background: 'var(--color-bg-dark)', overflow: 'hidden' }}>
+    <div style={{ flex: 1, display: 'flex', flexDirection: 'column', background: 'var(--color-bg-dark)', overflow: 'hidden' }}>
       {/* Top bar */}
       <div
         style={{

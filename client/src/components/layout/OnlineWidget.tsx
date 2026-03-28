@@ -124,7 +124,7 @@ function UserRow({ user }: { user: OnlineUser }) {
 
 // ─── Online widget ────────────────────────────────────────────────────────────
 
-export function OnlineWidget() {
+export function OnlineWidget({ compact = false }: { compact?: boolean }) {
   const { count, users } = usePresence();
   const [open, setOpen]  = useState(false);
   const ref = useRef<HTMLDivElement>(null);
@@ -146,9 +146,9 @@ export function OnlineWidget() {
         onClick={() => setOpen((o) => !o)}
         title="Who's online"
         style={{
-          display: 'flex', alignItems: 'center', gap: '6px',
+          display: 'flex', alignItems: 'center', gap: compact ? '4px' : '6px',
           background: 'none', border: 'none', cursor: 'pointer',
-          padding: '4px 8px', borderRadius: '8px',
+          padding: compact ? '2px 5px' : '4px 8px', borderRadius: '8px',
           color: 'var(--color-text-muted)',
           transition: 'background 0.15s',
         }}
@@ -160,13 +160,13 @@ export function OnlineWidget() {
           className="presence-dot"
           style={{
             display: 'inline-block',
-            width: '8px', height: '8px',
+            width: compact ? '6px' : '8px', height: compact ? '6px' : '8px',
             borderRadius: '50%',
             background: '#4caf7d',
             flexShrink: 0,
           }}
         />
-        <span style={{ fontSize: '13px', fontWeight: 600, minWidth: '12px' }}>
+        <span style={{ fontSize: compact ? '11px' : '13px', fontWeight: 600, minWidth: '12px' }}>
           {count}
         </span>
       </button>

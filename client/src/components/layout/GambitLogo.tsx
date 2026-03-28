@@ -1,84 +1,50 @@
 import { Link } from 'react-router-dom';
 
 /**
- * Gambit wordmark — king shatters under the pawn's weight.
+ * Gambit logo — gold knight badge + crowned "Gambit" wordmark.
  *
- * The king is rendered as 4 clipped quadrant shards assembled into one.
- * The pawn slams down. On impact each shard spins outward and fades.
+ * The badge is intentionally oversized so it floats beyond the header
+ * ribbon, giving the logo a premium, branded presence.
  *
  * Timeline:
- *   0.0s          King visible (assembled shards)
- *   0.0 → 0.7s   Pawn falls fast from above
- *   0.7s          IMPACT — shards fly, pawn squishes then bounces
- *   0.7 → 1.25s  Shards spin outward and fade
- *   1.1 → 1.5s   "Gambit" wordmark slides in
+ *   0.0 → 0.6s   Knight badge scales in with slight rotation
+ *   0.25 → 0.65s  Wordmark slides in from left
+ *   0.5 → 0.8s    Gold underline reveals left-to-right
+ *   0.6 → 0.9s    Crown fades in above G
  */
 export function GambitLogo({ linkTo = '/' }: { linkTo?: string }) {
   return (
     <>
       <style>{`
-        /* ── Pawn slam ── */
-        @keyframes gambit-pawn-slam {
-          0%   { transform: translateY(-260%) scale(0.8);   opacity: 0; }
-          65%  { transform: translateY(6%)    scale(1);     opacity: 1; }
-          72%  { transform: translateY(6%)    scaleY(0.88); opacity: 1; }
-          82%  { transform: translateY(-4%)   scale(1.03);  opacity: 1; }
-          92%  { transform: translateY(2%);                 opacity: 1; }
-          100% { transform: translateY(0)     scale(1);     opacity: 1; }
+        @keyframes gambit-badge-in {
+          0%   { opacity: 0; transform: scale(0.85) rotate(-10deg); }
+          70%  { opacity: 1; transform: scale(1.02) rotate(1deg); }
+          100% { opacity: 1; transform: scale(1) rotate(0deg); }
         }
-
-        /* ── King shards — each flies to its own corner ── */
-        @keyframes shard-tl {
-          0%   { transform: translate(0, 0) rotate(0deg)    scale(1);   opacity: 1; }
-          100% { transform: translate(-140%, -120%) rotate(-65deg) scale(0.25); opacity: 0; }
-        }
-        @keyframes shard-tr {
-          0%   { transform: translate(0, 0) rotate(0deg)   scale(1);   opacity: 1; }
-          100% { transform: translate(140%, -100%) rotate(70deg)  scale(0.25); opacity: 0; }
-        }
-        @keyframes shard-bl {
-          0%   { transform: translate(0, 0) rotate(0deg)    scale(1);   opacity: 1; }
-          100% { transform: translate(-110%, 130%) rotate(-50deg) scale(0.2);  opacity: 0; }
-        }
-        @keyframes shard-br {
-          0%   { transform: translate(0, 0) rotate(0deg)   scale(1);   opacity: 1; }
-          100% { transform: translate(110%, 120%)  rotate(55deg)  scale(0.2);  opacity: 0; }
-        }
-
-        /* ── Wordmark ── */
         @keyframes gambit-text-in {
-          0%   { transform: translateX(-8px); opacity: 0; }
-          100% { transform: translateX(0);    opacity: 1; }
+          0%   { opacity: 0; transform: translateX(-8px); }
+          100% { opacity: 1; transform: translateX(0); }
+        }
+        @keyframes gambit-line-in {
+          0%   { transform: scaleX(0); }
+          100% { transform: scaleX(1); }
         }
         @keyframes gambit-crown-in {
-          0%   { transform: translateX(-50%) translateY(-6px) scale(0.6); opacity: 0; }
-          100% { transform: translateX(-50%) translateY(0)    scale(1);   opacity: 1; }
+          0%   { opacity: 0; transform: translateX(-50%) translateY(-4px) scale(0.5); }
+          100% { opacity: 1; transform: translateX(-50%) translateY(0) scale(1); }
         }
 
-        .gambit-pawn {
-          display: block;
-          position: absolute;
-          top: 0; left: 0;
-          transform-origin: center bottom;
-          animation: gambit-pawn-slam 0.7s cubic-bezier(0.4, 0, 0.6, 1) 0s both;
+        .gambit-badge {
+          animation: gambit-badge-in 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 0s both;
         }
-        .gambit-shard-tl { animation: shard-tl 0.55s cubic-bezier(0.2, 0, 0.6, 1) 0.65s both; }
-        .gambit-shard-tr { animation: shard-tr 0.55s cubic-bezier(0.2, 0, 0.6, 1) 0.67s both; }
-        .gambit-shard-bl { animation: shard-bl 0.55s cubic-bezier(0.2, 0, 0.6, 1) 0.66s both; }
-        .gambit-shard-br { animation: shard-br 0.55s cubic-bezier(0.2, 0, 0.6, 1) 0.68s both; }
-
-        .gambit-logo-text {
-          display: inline-block;
-          font-family: 'Cinzel', 'Georgia', serif;
-          animation: gambit-text-in 0.4s ease-out 1.1s both;
+        .gambit-wordmark {
+          animation: gambit-text-in 0.4s ease-out 0.25s both;
         }
-        .gambit-logo-crown {
-          position: absolute;
-          top: -0.6em;
-          left: 44%;
-          transform: translateX(-50%);
-          line-height: 1;
-          animation: gambit-crown-in 0.35s ease-out 1.3s both;
+        .gambit-underline {
+          animation: gambit-line-in 0.4s ease-out 0.5s both;
+        }
+        .gambit-crown {
+          animation: gambit-crown-in 0.35s ease-out 0.6s both;
         }
       `}</style>
 
@@ -87,81 +53,103 @@ export function GambitLogo({ linkTo = '/' }: { linkTo?: string }) {
         style={{
           display: 'flex',
           alignItems: 'center',
-          gap: '0.3rem',
+          gap: '0.75rem',
           textDecoration: 'none',
           userSelect: 'none',
         }}
       >
-        {/* Piece stack */}
+        {/* Knight badge — oversized to float beyond the header */}
         <span
+          className="gambit-badge"
           style={{
-            position: 'relative',
-            display: 'inline-block',
-            width: '2.8rem',
-            height: '2.8rem',
+            width: '3.625rem',
+            height: '3.625rem',
+            borderRadius: '0.875rem',
+            background: 'linear-gradient(145deg, #d4b35a, #a8892e)',
             flexShrink: 0,
+            boxShadow:
+              '0 6px 20px rgba(0,0,0,0.45), 0 2px 6px rgba(0,0,0,0.3), 0 0 30px rgba(201,168,76,0.15)',
+            overflow: 'hidden',
+            position: 'relative',
+            display: 'block',
           }}
+          aria-hidden
         >
-          {/* King — rendered as 4 assembled shards that fly apart on impact */}
-          {[
-            { cls: 'gambit-shard-tl', clip: 'polygon(0% 0%, 58% 0%, 58% 54%, 0% 54%)' },
-            { cls: 'gambit-shard-tr', clip: 'polygon(42% 0%, 100% 0%, 100% 54%, 42% 54%)' },
-            { cls: 'gambit-shard-bl', clip: 'polygon(0% 46%, 58% 46%, 58% 100%, 0% 100%)' },
-            { cls: 'gambit-shard-br', clip: 'polygon(42% 46%, 100% 46%, 100% 100%, 42% 100%)' },
-          ].map(({ cls, clip }) => (
-            <span
-              key={cls}
-              className={cls}
-              style={{
-                display: 'block',
-                position: 'absolute',
-                top: 0,
-                left: 0,
-                fontSize: '3.4rem',
-                lineHeight: 1,
-                color: 'rgba(201,168,76,0.85)',
-                clipPath: clip,
-              }}
-              aria-hidden
-            >
-              ♚
-            </span>
-          ))}
-
-          {/* Pawn — slams down from above */}
           <span
-            className="gambit-pawn"
-            style={{ fontSize: '2.8rem', lineHeight: 1, color: 'var(--color-gold)' }}
-            aria-hidden
+            style={{
+              fontSize: '3.8rem',
+              color: '#141f14',
+              position: 'absolute',
+              top: '50%',
+              left: '50%',
+              transform: 'translate(-52%, -48%)',
+              lineHeight: 1,
+            }}
           >
-            ♟
+            ♞
           </span>
         </span>
 
-        {/* Wordmark — Cinzel with crowned G */}
+        {/* Wordmark — Cinzel with crowned G + gold underline */}
         <span
-          className="gambit-logo-text"
+          className="gambit-wordmark"
           style={{
-            fontSize: '1.75rem',
-            fontWeight: 700,
-            letterSpacing: '0.04em',
-            color: 'var(--color-gold)',
-            marginLeft: '0.3rem',
             display: 'flex',
-            alignItems: 'flex-start',
+            flexDirection: 'column',
+            gap: '0.2rem',
           }}
         >
-          <span style={{ position: 'relative', display: 'inline-block' }}>
-            G
-            <span
-              className="gambit-logo-crown"
-              style={{ fontSize: '0.75em', color: 'var(--color-gold)' }}
-              aria-hidden
-            >
-              ♛
+          <span
+            style={{
+              fontFamily: "'Cinzel', 'Georgia', serif",
+              fontSize: '1.7rem',
+              fontWeight: 700,
+              letterSpacing: '0.05em',
+              color: 'var(--color-gold)',
+              display: 'flex',
+              alignItems: 'flex-start',
+              lineHeight: 1.1,
+            }}
+          >
+            <span style={{ position: 'relative', display: 'inline-block' }}>
+              G
+              {/* Crown SVG */}
+              <svg
+                className="gambit-crown"
+                width="16"
+                height="9"
+                viewBox="0 0 16 10"
+                style={{
+                  position: 'absolute',
+                  top: '-0.25rem',
+                  left: '50%',
+                  transform: 'translateX(-50%)',
+                }}
+                aria-hidden="true"
+              >
+                <path
+                  d="M2 10 L4 4 L6 7 L8 2 L10 7 L12 4 L14 10"
+                  stroke="var(--color-gold)"
+                  strokeWidth="1.5"
+                  fill="none"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
             </span>
+            ambit
           </span>
-          ambit
+
+          {/* Gold accent underline */}
+          <span
+            className="gambit-underline"
+            style={{
+              height: '1.5px',
+              background: 'linear-gradient(90deg, var(--color-gold) 70%, transparent)',
+              borderRadius: '1px',
+              transformOrigin: 'left',
+            }}
+          />
         </span>
       </Link>
     </>

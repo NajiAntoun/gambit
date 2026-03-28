@@ -1415,6 +1415,62 @@ export const openings: Opening[] = [
       { san: 'a6',  color: 'b', explanation: 'Support ...b5 and prepare the queenside pawn storm. Both sides are in a race — Black on the queenside, White on the kingside. This is the Modern Benoni at its most dynamic and exciting.' },
     ],
   },
+
+  // ─── SPECIAL / TACTICAL OPENINGS ────────────────────────────────────────────
+
+  {
+    id: 'scholars-mate-defense',
+    name: "Scholar's Mate Defense",
+    eco: 'C20',
+    category: "Black vs King's Pawn (e4)",
+    userColor: 'black',
+    difficulty: 'beginner',
+    yearPopularized: 1600,
+    popularity: 4,
+    description: "Learn how to punish the Scholar's Mate attempt (Qh5/Bc4). Defend correctly, then launch a devastating counter-attack ending in a triple fork!",
+    moves: [
+      { san: 'e4',   color: 'w', explanation: 'White opens with e4 — the most common first move. It controls the center and opens diagonals for both the queen and bishop.' },
+      { san: 'e5',   color: 'b', explanation: 'Black mirrors with e5, fighting for the center. Note that f7 is now the weakest pawn on the board — only defended by the king.' },
+      { san: 'Qh5',  color: 'w', explanation: "The Scholar's Mate begins! The queen attacks both the e5 pawn AND the f7 pawn. This is the \"coup sournois\" — a sneaky double threat." },
+      { san: 'Nc6',  color: 'b', explanation: 'The best defense! The knight defends e5 while developing. Do NOT play g6 here — after Qxe5+ White forks the king and the h8 rook.' },
+      { san: 'Bc4',  color: 'w', explanation: 'White adds pressure on f7. The bishop and queen now both aim at that weak pawn. White threatens Qxf7# — the classic Scholar\'s Mate.' },
+      { san: 'g6',   color: 'b', explanation: 'NOW g6 is safe because Nc6 defends e5. The pawn attacks the queen and forces it to retreat. Black gains a tempo.' },
+      { san: 'Qf3',  color: 'w', explanation: 'The queen retreats to f3 — still eyeing f7! Remember, the queen had two squares for the Scholar\'s Mate attempt (Qh5 and Qf3). The threat persists.' },
+      { san: 'Nf6',  color: 'b', explanation: 'The king\'s knight blocks the f7 diagonal perfectly. The knight is defended by the queen on d8. White can no longer reach f7.' },
+      { san: 'Qb3',  color: 'w', explanation: 'White shifts the queen to b3, still targeting f7 along the b3-f7 diagonal via the Bc4. White also pressures b7.' },
+      { san: 'Nd4',  color: 'b', explanation: 'The counter-attack begins! This knight leap threatens the queen on b3 AND threatens Nxc2+ — a devastating fork on king and rook. White is in serious trouble.' },
+      { san: 'Bxf7+', color: 'w', explanation: 'White sacrifices the bishop on f7 with check. The queen on b3 protects the bishop along the diagonal, so Black cannot capture it.' },
+      { san: 'Ke7',  color: 'b', explanation: 'The king sidesteps. Black cannot take the bishop (Kxf7) because the Qb3 defends it along the b3-c4-d5-e6-f7 diagonal. Losing castling rights is temporary — the counter-attack will be devastating.' },
+      { san: 'Qc4',  color: 'w', explanation: 'White tries to defend everything — the queen protects the bishop on f7 and the pawn on c2. But she\'s overloaded with too many tasks.' },
+      { san: 'b5',   color: 'b', explanation: 'A brilliant pawn thrust! The pawn attacks the queen while being defended by the knight on d4. The queen cannot protect BOTH the f7 bishop AND the c2 pawn anymore.' },
+      { san: 'Qc3',  color: 'w', explanation: 'The queen retreats to c3, choosing to protect c2 but abandoning the bishop on f7. This is White\'s least-bad option.' },
+      { san: 'Kxf7', color: 'b', explanation: 'Black captures the abandoned bishop — free material! The king on f7 also clears the e7 square and the f8 diagonal for the bishop.' },
+      { san: 'd3',   color: 'w', explanation: 'White develops, trying to catch up. But it\'s too late — Black\'s attack is already decisive.' },
+      { san: 'Bb4',  color: 'b', explanation: 'The bishop pins the queen to the king! White\'s queen is stuck — if she moves, Bxe1 captures the king. The only option is Qxb4.' },
+      { san: 'Qxb4', color: 'w', explanation: 'Forced — White must take the bishop to escape the pin. But this leaves c2 completely undefended.' },
+      { san: 'Nxc2+', color: 'b', explanation: 'TRIPLE FORK! The knight checks the king on e1, attacks the rook on a1, AND attacks the queen on b4. Black wins massive material — the Scholar\'s Mate attempt is completely destroyed.' },
+    ],
+    forks: [
+      {
+        afterMoveIndex: 8,
+        prompt: 'White advances g4 — how do you respond?',
+        options: [
+          {
+            san: 'g4',
+            label: 'g4 Push',
+            badge: 'Aggressive but flawed',
+            description: 'White pushes g4 planning g5 to kick the Nf6, but leaves the pawn undefended.',
+            moves: [
+              { san: 'g4',   color: 'w', explanation: 'White pushes the g-pawn, planning g5 to attack the knight on f6 and reopen the path to f7. But this pawn is now unprotected.' },
+              { san: 'Nd4',  color: 'b', explanation: 'The same counter-attack! Nd4 threatens the queen and the Nxc2+ fork. White must deal with the queen threat first.' },
+              { san: 'Qd3',  color: 'w', explanation: 'The best retreat — defends both e4 and c2. But White has a new problem: the g4 pawn is hanging.' },
+              { san: 'Nfxg4', color: 'b', explanation: 'Black grabs the free pawn! The knight takes on g4 with tempo and threat. White\'s aggressive g4 push backfired completely.' },
+            ],
+          },
+        ],
+      },
+    ],
+  },
 ];
 
 // Attach deviation data to openings that have it

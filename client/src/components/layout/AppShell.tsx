@@ -4,6 +4,7 @@ import { useProgress } from '../../hooks/useProgress';
 import { useAccount } from '../../hooks/useAccount';
 import { OnlineWidget } from './OnlineWidget';
 import { GambitLogo } from './GambitLogo';
+import { Link } from 'react-router-dom';
 
 function LoadingScreen() {
   return (
@@ -24,6 +25,44 @@ function LoadingScreen() {
   );
 }
 
+/** Compact logo — just the knight badge, no wordmark */
+function CompactLogo() {
+  return (
+    <Link
+      to="/"
+      style={{ textDecoration: 'none', display: 'flex', alignItems: 'center' }}
+    >
+      <span
+        style={{
+          width: '2rem',
+          height: '2rem',
+          borderRadius: '0.5rem',
+          background: 'linear-gradient(145deg, #d4b35a, #a8892e)',
+          flexShrink: 0,
+          boxShadow: '0 2px 8px rgba(0,0,0,0.3), 0 0 12px rgba(201,168,76,0.1)',
+          overflow: 'hidden',
+          position: 'relative',
+          display: 'block',
+        }}
+      >
+        <span
+          style={{
+            fontSize: '1.65rem',
+            color: '#141f14',
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-52%, -48%)',
+            lineHeight: 1,
+          }}
+        >
+          ♞
+        </span>
+      </span>
+    </Link>
+  );
+}
+
 export function AppShell() {
   const location  = useLocation();
   const navigate  = useNavigate();
@@ -40,18 +79,47 @@ export function AppShell() {
 
   return (
     <div className="flex flex-col min-h-svh" style={{ background: 'var(--color-bg-dark)' }}>
-      {!isBoard && (
+      {isBoard ? (
+        /* ── Compact header for board pages ─────────────────────── */
+        <header
+          className="flex items-center justify-end gap-3 px-3 py-1.5 border-b"
+          style={{
+            borderColor: 'var(--color-border)',
+            background: 'var(--color-bg-card)',
+            position: 'relative',
+            zIndex: 10,
+            minHeight: '36px',
+          }}
+        >
+          <div className="mr-auto">
+            <CompactLogo />
+          </div>
+          <OnlineWidget compact />
+          <UserButton>
+            <UserButton.MenuItems>
+              <UserButton.Action
+                label="My Profile"
+                labelIcon={<span style={{ fontSize: '14px' }}>♟</span>}
+                onClick={() => navigate('/profile')}
+              />
+              <UserButton.Action
+                label="Progress"
+                labelIcon={<span style={{ fontSize: '14px' }}>📊</span>}
+                onClick={() => navigate('/dashboard')}
+              />
+            </UserButton.MenuItems>
+          </UserButton>
+        </header>
+      ) : (
+        /* ── Full header for non-board pages ─────────────────────── */
         <header
           className="flex items-center justify-between px-4 py-3 border-b"
-          style={{ borderColor: 'var(--color-border)', background: 'var(--color-bg-card)' }}
+          style={{ borderColor: 'var(--color-border)', background: 'var(--color-bg-card)', overflow: 'visible', position: 'relative', zIndex: 10 }}
         >
           <GambitLogo />
 
           <nav className="flex items-center gap-3">
-            {/* Online presence widget */}
             <OnlineWidget />
-
-            {/* Clerk UserButton with custom menu items */}
             <UserButton>
               <UserButton.MenuItems>
                 <UserButton.Action
