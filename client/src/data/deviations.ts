@@ -121,6 +121,52 @@ export const deviationsByOpening: Record<string, Deviation[]> = {
     },
   ],
 
+  'kings-indian-attack': [
+    {
+      atMoveIndex: 1, // Book: 1...d5. Deviation: 1...d6 (passive, Pirc-like)
+      move: 'd6',
+      label: 'Passive 1...d6',
+      deviationExplanation: 'Black plays passively with d6 instead of claiming the center with d5. This gives White a free hand to set up the KIA without any challenge.',
+      correctResponse: 'g3',
+      responseExplanation: 'Continue with the KIA setup! g3 followed by Bg2 is your plan regardless. Black\'s passive d6 means you\'ll get the fianchetto and kingside attack rolling without any resistance.',
+    },
+    {
+      atMoveIndex: 1, // Book: 1...d5. Deviation: 1...e5 (grabbing center)
+      move: 'e5',
+      label: 'Aggressive 1...e5',
+      deviationExplanation: 'Black grabs the center with e5, taking space but leaving d5 unoccupied. This is a reversed Sicilian-like structure.',
+      correctResponse: 'd3',
+      responseExplanation: 'Play d3 and continue the KIA setup! The beauty of the KIA is that it works against almost any Black setup. You\'ll follow with g3, Bg2, O-O and aim for the same kingside attack.',
+    },
+    {
+      atMoveIndex: 5, // Book: 3...Bg4. Deviation: 3...Bg4 (pin attempt)
+      move: 'Bg4',
+      label: 'Bishop pin attempt',
+      deviationExplanation: 'Black pins the knight to the queen with Bg4. This looks annoying but the KIA has a simple answer.',
+      correctResponse: 'O-O',
+      responseExplanation: 'Castle and ignore the pin! After O-O, the pin on the f3 knight is harmless — White will play h3 next if needed, and the KIA plan continues. The bishop on g4 is actually misplaced and will need to retreat.',
+    },
+  ],
+
+  'bishops-opening': [
+    {
+      atMoveIndex: 3, // Book: 2...Nf6. Deviation: 2...Nc6
+      move: 'Nc6',
+      label: 'Knight to c6',
+      deviationExplanation: 'Black develops the knight to c6 instead of attacking e4 with Nf6. This transposes toward Italian Game territory.',
+      correctResponse: 'Nf3',
+      responseExplanation: 'Develop with Nf3! This transposes into favorable Italian Game lines where the bishop is already well-placed on c4. White has a smooth development and the position is comfortable.',
+    },
+    {
+      atMoveIndex: 3, // Book: 2...Nf6. Deviation: 2...d5 (counter-gambit)
+      move: 'd5',
+      label: 'Center counter-gambit',
+      deviationExplanation: 'Black immediately strikes back in the center with d5, attacking the bishop on c4. This is sharp but gives White a target.',
+      correctResponse: 'exd5',
+      responseExplanation: 'Capture the pawn! After exd5, White wins a central pawn. Black can try Nf6 to attack d5, but White has good development and the extra pawn gives a lasting advantage.',
+    },
+  ],
+
   // ─── BLACK vs e4 ───────────────────────────────────────────────────────────
 
   'french-defense': [
@@ -183,7 +229,7 @@ export const deviationsByOpening: Record<string, Deviation[]> = {
     },
   ],
 
-  'scandinavian': [
+  'scandinavian-defense': [
     {
       atMoveIndex: 6, // Book: 3.Nc3. Deviation: 3.d4
       move: 'd4',
@@ -191,6 +237,55 @@ export const deviationsByOpening: Record<string, Deviation[]> = {
       deviationExplanation: 'White pushes d4 before developing the knight. This gives Black a clear target to develop against.',
       correctResponse: 'Nc6',
       responseExplanation: 'Develop the knight to c6! It pressures d4 immediately and develops a piece with tempo. White\'s center becomes a target rather than a strength.',
+    },
+    {
+      atMoveIndex: 2, // Book: 2.exd5. Deviation: 2.e5 (Advance)
+      move: 'e5',
+      label: 'Advance Variation',
+      deviationExplanation: 'White pushes e5 instead of capturing on d5. This grabs space but commits the center prematurely.',
+      correctResponse: 'Bf5',
+      responseExplanation: 'Develop the bishop outside the pawn chain with Bf5! This is the key idea — get the light-squared bishop active before playing e6. White\'s e5 pawn will become a target later with f6.',
+    },
+  ],
+
+  'pirc-defense': [
+    {
+      atMoveIndex: 6, // Book: 4.Nf3. Deviation: 4.f4 (Austrian Attack)
+      move: 'f4',
+      label: 'Austrian Attack',
+      deviationExplanation: 'White plays the aggressive Austrian Attack with f4, aiming for a quick e5 push. Very direct but weakens the kingside.',
+      correctResponse: 'Bg7',
+      responseExplanation: 'Complete the fianchetto with Bg7! The bishop will be a monster on the long diagonal. After castling, Black can target the weakened e5 and f4 pawns with ...c5 and ...Qb6.',
+    },
+    {
+      atMoveIndex: 2, // Book: 2.d4. Deviation: 2.Bc4 (offbeat)
+      move: 'Bc4',
+      label: 'Offbeat Bc4',
+      deviationExplanation: 'White develops the bishop aggressively instead of building the pawn center with d4. This is rare and gives Black easy equality.',
+      correctResponse: 'Nf6',
+      responseExplanation: 'Develop and attack e4! Without d4, White\'s center is thin. The knight on f6 immediately pressures e4 and Black can continue with a normal Pirc setup with an extra tempo.',
+    },
+  ],
+
+  'sicilian-scheveningen': [
+    {
+      atMoveIndex: 10, // Book: 6.Be2. Deviation: 6.f4 (aggressive)
+      move: 'f4',
+      label: 'Aggressive f4',
+      deviationExplanation: 'White plays f4 instead of the quiet Be2, going for a direct kingside attack. Ambitious but creates weaknesses.',
+      correctResponse: 'Be7',
+      responseExplanation: 'Develop calmly with Be7! Don\'t panic against f4 — the Scheveningen structure is solid. Castle quickly and prepare ...b5 for queenside counterplay while White\'s king position weakens.',
+    },
+  ],
+
+  'sicilian-najdorf-poisoned-pawn': [
+    {
+      atMoveIndex: 10, // Book: 6.Bg5. Deviation: 6.f3 (English Attack)
+      move: 'f3',
+      label: 'English Attack',
+      deviationExplanation: 'White plays the English Attack with f3, preparing Be3, Qd2, and g4. A slow but dangerous system.',
+      correctResponse: 'e5',
+      responseExplanation: 'Strike the center with e5! Push the knight away from d4 while White has spent a tempo on f3 instead of developing. Black gets active counterplay before White\'s kingside attack gets rolling.',
     },
   ],
 
@@ -229,6 +324,25 @@ export const deviationsByOpening: Record<string, Deviation[]> = {
 
   // ─── BLACK vs d4 ───────────────────────────────────────────────────────────
 
+  'queens-gambit-declined': [
+    {
+      atMoveIndex: 4, // Book: 3.Nc3. Deviation: 3.cxd5 (Exchange Variation)
+      move: 'cxd5',
+      label: 'Exchange Variation',
+      deviationExplanation: 'White exchanges pawns early, relieving the central tension. The Exchange QGD is solid but gives Black easy equality if handled correctly.',
+      correctResponse: 'exd5',
+      responseExplanation: 'Recapture with exd5! Black gets a symmetrical pawn structure with open lines for the bishops. Develop actively with Nf6, Be7, and O-O — the position is equal and easy to play.',
+    },
+    {
+      atMoveIndex: 6, // Book: 4.Bg5. Deviation: 4.Bf4 (London-like)
+      move: 'Bf4',
+      label: 'London-style Bf4',
+      deviationExplanation: 'White develops the bishop to f4 instead of the more aggressive Bg5. This avoids the pin on the knight but is less challenging.',
+      correctResponse: 'c5',
+      responseExplanation: 'Challenge the center with c5! Without the Bg5 pin, Black can freely break in the center. The d4 pawn comes under pressure and Black gets an active position.',
+    },
+  ],
+
   'nimzo-indian': [
     {
       atMoveIndex: 4, // Book: 3.Nc3. Deviation: 3.Nf3 (avoids Nimzo)
@@ -251,7 +365,7 @@ export const deviationsByOpening: Record<string, Deviation[]> = {
     },
   ],
 
-  'queens-indian': [
+  'queens-indian-defense': [
     {
       atMoveIndex: 4, // Book: 3.Nf3. Deviation: 3.Nc3 (transposes to Nimzo territory)
       move: 'Nc3',
@@ -259,6 +373,14 @@ export const deviationsByOpening: Record<string, Deviation[]> = {
       deviationExplanation: 'White plays Nc3, inviting a Nimzo-Indian. But if you wanted the Queen\'s Indian, you can still get a good game.',
       correctResponse: 'Bb4',
       responseExplanation: 'Pin the knight with Bb4! This transposes into a favorable Nimzo-Indian setup. The pin on c3 is annoying for White and gives Black easy development.',
+    },
+    {
+      atMoveIndex: 6, // Book: 4.g3. Deviation: 4.e4 (aggressive)
+      move: 'e4',
+      label: 'Aggressive e4',
+      deviationExplanation: 'White grabs the center with e4 instead of the quiet fianchetto. Ambitious but commits early.',
+      correctResponse: 'Bb7',
+      responseExplanation: 'Fianchetto the bishop with Bb7! The bishop targets e4, putting pressure on White\'s overextended center. After ...Bb4+ or ...Be7 and ...O-O, Black has a great position against the weakened center.',
     },
   ],
 
