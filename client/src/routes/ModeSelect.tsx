@@ -111,24 +111,26 @@ export function ModeSelect() {
           </div>
         </button>
 
-        {/* Drill — coming soon */}
+        {/* Drill */}
         <button
-          disabled
+          onClick={() => navigate(`/drill/${opening.id}`)}
           style={{
             background: 'var(--color-bg-card)',
             border: '1px solid var(--color-border)',
             borderRadius: '10px',
             padding: '16px',
             textAlign: 'left',
-            cursor: 'not-allowed',
-            opacity: 0.4,
+            cursor: 'pointer',
+            transition: 'border-color 0.15s',
           }}
+          onMouseEnter={(e) => ((e.currentTarget as HTMLButtonElement).style.borderColor = 'var(--color-gold)')}
+          onMouseLeave={(e) => ((e.currentTarget as HTMLButtonElement).style.borderColor = 'var(--color-border)')}
         >
-          <div style={{ fontWeight: 700, color: 'var(--color-text)', fontSize: '16px', marginBottom: '4px' }}>
+          <div style={{ fontWeight: 700, color: '#fbbf24', fontSize: '16px', marginBottom: '4px' }}>
             ⚡ Drill
           </div>
           <div style={{ color: 'var(--color-text-muted)', fontSize: '13px' }}>
-            Speed practice — coming soon.
+            Your opponent deviates — find the best punishment.
           </div>
         </button>
       </div>

@@ -7,6 +7,7 @@ import { MASTERY_CLEAN_RUNS } from '../lib/constants';
 interface ProgressContextValue {
   getProgress: (openingId: string) => OpeningProgress;
   recordQuizResult: (openingId: string, perfect: boolean, timeMs: number) => void;
+  recordDrillResult: (openingId: string, bestStreak: number, timeMs: number) => void;
   refresh: () => void;
   isLoading: boolean;
 }
@@ -91,9 +92,34 @@ export function useProgressState(userId: string): ProgressContextValue {
     [getToken],
   );
 
+  const recordDrillResult = useCallback(
+    (openingId: string, bestStreak: number, timeMs: number) => {
+      const current = openingsRef.current[openingId] ?? defaultProgress();
+
+      const updated: OpeningProgress = {
+        ...current,
+        status: current.status === 'not-started' ? 'learning' : current.status,
+        drillBestStreak: Math.max(current.drillBestStreak, bestStreak),
+        drillBestTime:
+          current.drillBestTime === null || timeMs < current.drillBestTime
+            ? timeMs
+            : current.drillBestTime,
+        lastAttempted: new Date().toISOString(),
+      };
+
+      const newOpenings = { ...openingsRef.current, [openingId]: updated };
+      setOpenings(newOpenings);
+
+      void getToken().then((token) => {
+        if (token) saveProgress(newOpenings, token).catch(console.error);
+      });
+    },
+    [getToken],
+  );
+
   const refresh = useCallback(() => void loadFromServer(), [loadFromServer]);
 
-  return { getProgress, recordQuizResult, refresh, isLoading };
+  return { getProgress, recordQuizResult, recordDrillResult, refresh, isLoading };
 }
 
 export function useProgress(): ProgressContextValue {

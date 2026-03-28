@@ -9,6 +9,7 @@ import { Home } from './routes/Home';
 import { ModeSelect } from './routes/ModeSelect';
 import { Learn } from './routes/Learn';
 import { Quiz } from './routes/Quiz';
+import { Drill } from './routes/Drill';
 import { Dashboard } from './routes/Dashboard';
 import { Profile } from './routes/Profile';
 import { SignInPage } from './routes/SignIn';
@@ -27,6 +28,7 @@ const router = createBrowserRouter([
       { path: 'mode/:openingId',      element: <ModeSelect />  },
       { path: 'learn/:openingId',     element: <Learn />       },
       { path: 'quiz/:openingId',      element: <Quiz />        },
+      { path: 'drill/:openingId',     element: <Drill />       },
       { path: 'dashboard',            element: <Dashboard />   },
       { path: 'profile',              element: <Profile />     },
     ],

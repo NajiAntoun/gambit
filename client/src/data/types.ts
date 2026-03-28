@@ -76,6 +76,25 @@ export interface OpeningFork {
 /** 1 = niche/rare, 2 = uncommon, 3 = common, 4 = popular, 5 = elite (top-level staple) */
 export type Popularity = 1 | 2 | 3 | 4 | 5;
 
+/**
+ * A known opponent deviation from the book line.
+ * The drill engine plays the deviation and the user must find the punishment.
+ */
+export interface Deviation {
+  /** Index in opening.moves of the opponent move that gets replaced */
+  atMoveIndex: number;
+  /** The off-book move the opponent plays instead */
+  move: string;
+  /** Short label for the deviation (e.g. "Early Bg5?!") */
+  label: string;
+  /** Why this deviation is inaccurate or bad */
+  deviationExplanation: string;
+  /** The best user response (SAN) */
+  correctResponse: string;
+  /** Why this response punishes the deviation */
+  responseExplanation: string;
+}
+
 export interface Opening {
   id: string;
   name: string;
@@ -93,6 +112,8 @@ export interface Opening {
   moves: OpeningMove[];
   /** Optional branching points — accept/decline gambit decisions etc. */
   forks?: OpeningFork[];
+  /** Known opponent deviations for Drill mode */
+  deviations?: Deviation[];
 }
 
 export interface OpeningProgress {

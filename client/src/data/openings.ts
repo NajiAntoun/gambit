@@ -1,4 +1,5 @@
 import type { Opening } from './types';
+import { deviationsByOpening } from './deviations';
 
 export const openings: Opening[] = [
   // ─── WHITE OPENINGS ───────────────────────────────────────────────────────
@@ -1325,6 +1326,12 @@ export const openings: Opening[] = [
     ],
   },
 ];
+
+// Attach deviation data to openings that have it
+for (const o of openings) {
+  const devs = deviationsByOpening[o.id];
+  if (devs) o.deviations = devs;
+}
 
 export const getOpeningById = (id: string): Opening | undefined =>
   openings.find((o) => o.id === id);
