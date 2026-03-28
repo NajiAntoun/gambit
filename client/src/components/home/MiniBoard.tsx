@@ -16,12 +16,16 @@ interface MiniBoardProps {
  */
 export function MiniBoard({ moves, depth, size = 80 }: MiniBoardProps) {
   const board = useMemo(() => {
-    const game = new Chess();
-    const n = depth ?? moves.length;
-    for (let i = 0; i < n && i < moves.length; i++) {
-      if (!game.move(moves[i].san)) break;
+    try {
+      const game = new Chess();
+      const n = depth ?? moves.length;
+      for (let i = 0; i < n && i < moves.length; i++) {
+        if (!game.move(moves[i].san)) break;
+      }
+      return game.board(); // 8x8 array of { type, color } | null
+    } catch {
+      return new Chess().board(); // fallback to starting position
     }
-    return game.board(); // 8x8 array of { type, color } | null
   }, [moves, depth]);
 
   const cell = size / 8;

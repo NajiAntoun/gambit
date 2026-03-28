@@ -1,5 +1,6 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { ClerkProvider, useAuth } from '@clerk/clerk-react';
+import { ErrorBoundary } from './components/ErrorBoundary';
 import './App.css';
 import { AppShell } from './components/layout/AppShell';
 import { ProgressContext, useProgressState } from './hooks/useProgress';
@@ -66,8 +67,10 @@ export default function App() {
   }
 
   return (
-    <ClerkProvider publishableKey={PUBLISHABLE_KEY}>
-      <AppWithAuth />
-    </ClerkProvider>
+    <ErrorBoundary>
+      <ClerkProvider publishableKey={PUBLISHABLE_KEY}>
+        <AppWithAuth />
+      </ClerkProvider>
+    </ErrorBoundary>
   );
 }

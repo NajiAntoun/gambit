@@ -257,11 +257,11 @@ from both White and Black perspectives.
 ---
 
 ## 8. Backlog (post-v1)
-- Opening variation trees (forks, dangerous deviations, known traps)
+- ~~Opening variation trees (forks, dangerous deviations, known traps)~~ ✅ Done — 9 openings with accept/decline forks, ForkOverlay component
 - Deviation Drill mode (quiz with unexpected opponent moves)
-- Expand opening library (more White openings, Gambit Accepted lines, more Black vs d4)
+- ~~Expand opening library (more White openings, Gambit Accepted lines, more Black vs d4)~~ ✅ Done — 23 openings across all categories
 - Animated Gambit app icon
-- Playful onboarding copy ("Skip for now" teaser)
+- ~~Playful onboarding copy ("Skip for now" teaser)~~ ✅ Done
 - FIDE API integration if it becomes reliably CORS-safe
 
 ---
