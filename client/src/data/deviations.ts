@@ -101,12 +101,20 @@ export const deviationsByOpening: Record<string, Deviation[]> = {
 
   'kings-gambit': [
     {
-      atMoveIndex: 5, // Book: 2...exf4 (Accepted). Deviation: 2...d5 (Falkbeer Counter-Gambit)
+      atMoveIndex: 3, // Book: 2...exf4 (Accepted). Deviation: 2...d5 (Falkbeer Counter-Gambit)
       move: 'd5',
       label: 'Falkbeer Counter-Gambit',
-      deviationExplanation: 'Black counter-sacrifices a pawn instead of accepting! The Falkbeer aims to seize the initiative, but White has a strong reply.',
+      deviationExplanation: 'Black counter-sacrifices a pawn instead of accepting the gambit! The Falkbeer aims to seize the initiative, but White has a strong reply.',
       correctResponse: 'exd5',
       responseExplanation: 'Accept the pawn! After exd5, White is a pawn up and the f4 pawn is still there for Black to take. White can develop quickly and maintain the extra material.',
+    },
+    {
+      atMoveIndex: 5, // Book: 3...d6. Deviation: 3...d5 (aggressive counter-thrust)
+      move: 'd5',
+      label: 'Counter-thrust d5',
+      deviationExplanation: 'Instead of the quiet d6, Black aggressively attacks your e4 pawn with d5. This is a common surprise — your e4 pawn is undefended and d4 can\'t be played as planned.',
+      correctResponse: 'exd5',
+      responseExplanation: 'Capture with exd5! You win the central pawn and open lines for your pieces. Black gave up center control for activity, but White is a pawn up with a strong position. Don\'t be afraid of losing the e4 pawn — take theirs first!',
     },
   ],
 
