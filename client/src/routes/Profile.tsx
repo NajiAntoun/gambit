@@ -6,7 +6,6 @@ import { fetchChessCom, fetchLichess } from '../lib/api';
 import { GambitLogo } from '../components/layout/GambitLogo';
 import type { ChessLevel, PreferredColor, Goal, Gender, ChessTitle } from '../data/types';
 import { usePieceTheme, PIECE_THEMES } from '../hooks/usePieceTheme';
-import type { PieceTheme } from '../hooks/usePieceTheme';
 
 // ─── Segmented control ────────────────────────────────────────────────────────
 
