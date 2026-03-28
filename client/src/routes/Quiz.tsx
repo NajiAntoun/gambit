@@ -1,4 +1,5 @@
 import { useNavigate, useParams } from 'react-router-dom';
+import { useEffect, useRef } from 'react';
 import type { CSSProperties } from 'react';
 import { getOpeningById } from '../data/openings';
 import { useQuizEngine } from '../hooks/useQuizEngine';
@@ -40,6 +41,18 @@ export function Quiz() {
   ).length;
   const isPerfect = wrong === 0;
 
+  // Record quiz result once when complete (not during render)
+  const recordedRef = useRef(false);
+  useEffect(() => {
+    if (phase === 'complete' && endTime && !recordedRef.current) {
+      recordedRef.current = true;
+      recordQuizResult(opening.id, isPerfect, endTime - startTime);
+    }
+    if (phase !== 'complete') {
+      recordedRef.current = false;
+    }
+  }, [phase, endTime, isPerfect, startTime, opening.id, recordQuizResult]);
+
   // Highlight squares
   const highlightSquares: Record<string, CSSProperties> = {};
   if (phase === 'wrong' && wrongSquares) {
@@ -50,7 +63,6 @@ export function Quiz() {
   // Handle session complete
   if (phase === 'complete' && endTime) {
     const elapsed = endTime - startTime;
-    recordQuizResult(opening.id, isPerfect, elapsed);
 
     return (
       <div

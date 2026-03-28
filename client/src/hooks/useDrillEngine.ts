@@ -78,6 +78,10 @@ export function useDrillEngine(opening: Opening) {
 
   const [state, setState] = useState<DrillState>(makeInitialState);
 
+  // Keep a ref to scenarios so async callbacks always read the latest
+  const scenariosRef = useRef(state.scenarios);
+  scenariosRef.current = state.scenarios;
+
   // Reset when opening changes
   useEffect(() => {
     if (timerRef.current) clearTimeout(timerRef.current);
@@ -88,7 +92,8 @@ export function useDrillEngine(opening: Opening) {
   // Auto-play the main line up to the deviation point
   const playToDeviation = useCallback(
     (scenarioIndex: number) => {
-      const scenario = state.scenarios[scenarioIndex];
+      // Read from ref to avoid stale closure after restart
+      const scenario = scenariosRef.current[scenarioIndex];
       if (!scenario) return;
 
       const dev = scenario.deviation;
@@ -148,7 +153,7 @@ export function useDrillEngine(opening: Opening) {
         timerRef.current = setTimeout(playNext, 300);
       }
     },
-    [state.scenarios, opening.moves]
+    [opening.moves]
   );
 
   // Start playing when we enter a new scenario

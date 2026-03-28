@@ -1,4 +1,5 @@
 import { useNavigate, useParams } from 'react-router-dom';
+import { useEffect, useRef } from 'react';
 import { getOpeningById } from '../data/openings';
 import { useDrillEngine } from '../hooks/useDrillEngine';
 import { useProgress } from '../hooks/useProgress';
@@ -59,6 +60,18 @@ function DrillBoard({ opening }: { opening: ReturnType<typeof getOpeningById> & 
   const wrongCount = scenarios.filter((s) => s.userResult === 'wrong').length;
   const totalScenarios = scenarios.length;
 
+  // Record drill result once when complete (not during render)
+  const recordedRef = useRef(false);
+  useEffect(() => {
+    if (phase === 'complete' && endTime && !recordedRef.current) {
+      recordedRef.current = true;
+      recordDrillResult(opening.id, bestStreak, endTime - startTime);
+    }
+    if (phase !== 'complete') {
+      recordedRef.current = false;
+    }
+  }, [phase, endTime, bestStreak, startTime, opening.id, recordDrillResult]);
+
   // Highlight squares
   const highlightSquares: Record<string, CSSProperties> = {};
   if (phase === 'wrong' && lastMove) {
@@ -75,7 +88,6 @@ function DrillBoard({ opening }: { opening: ReturnType<typeof getOpeningById> & 
     const elapsed = endTime - startTime;
     const score = totalScenarios > 0 ? Math.round((correctCount / totalScenarios) * 100) : 0;
     const allCorrect = wrongCount === 0;
-    recordDrillResult(opening.id, bestStreak, elapsed);
 
     return (
       <div
