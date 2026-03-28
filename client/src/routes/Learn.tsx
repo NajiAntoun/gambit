@@ -125,8 +125,9 @@ export function Learn() {
             </Button>
             {(() => {
               const hasFork = opening.forks?.some(f => f.afterMoveIndex === moveIndex);
+              const disableNext = isAtEnd && !hasFork;
               return (
-                <Button variant={isAtEnd ? 'ghost' : 'primary'} size="md" onClick={next} disabled={isAtEnd}>
+                <Button variant={disableNext ? 'ghost' : 'primary'} size="md" onClick={next} disabled={disableNext}>
                   {hasFork ? '⑂ Choose line' : 'Next →'}
                 </Button>
               );

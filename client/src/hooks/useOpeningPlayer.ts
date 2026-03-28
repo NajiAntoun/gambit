@@ -87,7 +87,8 @@ export function useOpeningPlayer(opening: Opening) {
 
   const currentMove = moveIndex >= 0 ? activeMoves[moveIndex] : null;
   const isAtStart = moveIndex === -1;
-  const isAtEnd = moveIndex === activeMoves.length - 1;
+  const hasForkHere = opening.forks?.some(f => f.afterMoveIndex === moveIndex) ?? false;
+  const isAtEnd = moveIndex === activeMoves.length - 1 && !hasForkHere;
 
   return {
     moveIndex,
