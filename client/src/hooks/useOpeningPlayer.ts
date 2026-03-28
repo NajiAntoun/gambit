@@ -45,15 +45,15 @@ export function useOpeningPlayer(opening: Opening) {
   );
 
   const next = useCallback(() => {
-    const nextIndex = moveIndex + 1;
-    if (nextIndex >= activeMovesRef.current.length) return;
-
     // Check for a fork at the current position before advancing
     const fork = opening.forks?.find(f => f.afterMoveIndex === moveIndex);
     if (fork) {
       setPendingFork(fork);
       return; // Show overlay — don't advance yet
     }
+
+    const nextIndex = moveIndex + 1;
+    if (nextIndex >= activeMovesRef.current.length) return;
 
     goTo(nextIndex);
   }, [goTo, moveIndex, opening.forks]);
